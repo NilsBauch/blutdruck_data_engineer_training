@@ -26,32 +26,32 @@ Das Setup basiert auf **Python 3** als primärer Programmiersprache für den ges
 ```mermaid
 flowchart TD
     %% Quellen
-    subgraph Quellen [Datenquellen]
+    subgraph Quellen ["Datenquellen"]
         A["Mobile App: HealthForYou"]
         B["Smartwatch (via Google Fit)"]
     end
 
     %% Export/Rohdaten Layer
-    subgraph Export [Staging & Rohdaten-Ablage]
+    subgraph Export ["Staging & Rohdaten-Ablage"]
         C[("Manueller App-Export \n (Format: CSV)")]
         D[("Google Takeout Export \n (Formate: JSON, CSV, TCX)")]
     end
 
     %% Pipeline Layer
-    subgraph ETL [ETL-Datenpipeline (Python 3)]
-        E(1. Data Ingestion/Extraction)
-        F(2. Transformation & Bereinigung)
-        G(3. Feature Engineering & Harmonisierung)
+    subgraph ETL ["ETL-Datenpipeline (Python 3)"]
+        E("1. Data Ingestion/Extraction")
+        F("2. Transformation & Bereinigung")
+        G("3. Feature Engineering & Harmonisierung")
     end
 
     %% Storage Layer
-    subgraph Storage [Data Warehouse]
-        H[(SQLite3 Datenbank \n Star Schema: Fakten & Dimensionen)]
+    subgraph Storage ["Data Warehouse"]
+        H[("SQLite3 Datenbank \n Star Schema: Fakten & Dimensionen")]
     end
 
     %% Presentation Layer
-    subgraph Analyse [Business Intelligence]
-        I([Interaktives Streamlit Dashboard])
+    subgraph Analyse ["Business Intelligence"]
+        I(["Interaktives Streamlit Dashboard"])
     end
 
     %% Datenfluss
