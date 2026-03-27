@@ -5,27 +5,27 @@ Dieses Diagramm verdeutlicht die Architektur beim Starten der analytischen Oberf
 ```mermaid
 flowchart TD
     %% Swimlanes
-    subgraph UI [Benutzer / Webbrowser]
-        U1((Start)) --> A1[Webbrowser öffnen / Localhost aufrufen]
-        U1 --> A0[Kommandozeile: streamlit run dashboard.py\n(Server-Prozess starten)]
+    subgraph UI ["Benutzer / Webbrowser"]
+        U1(("Start")) --> A1["Webbrowser öffnen / Localhost aufrufen"]
+        U1 --> A0["Kommandozeile: streamlit run dashboard.py (Server-Prozess starten)"]
         A0 --> S1
-        A1 --> U2[Initiale Benutzeroberfläche laden]
-        U2 --> U3[Erste Dashboard-Ansicht (Overview) betrachten]
+        A1 --> U2["Initiale Benutzeroberfläche laden"]
+        U2 --> U3["Erste Dashboard-Ansicht (Overview) betrachten"]
     end
 
-    subgraph Server [Streamlit Backend]
-        S1[Streamlit-Dienst fährt hoch (Port 8501)]
-        S2[App-Code wird von oben nach unten ausgeführt]
-        S3[Initiale Datenbankverbindung herstellen]
-        S4[Basisdaten via SELECT-Query laden]
-        S5[Standard-Filterwerte setzen (z.B. letzte 30 Tage)]
-        S6[UI-Komponenten (Layout, Sidebar) generieren]
+    subgraph Server ["Streamlit Backend"]
+        S1["Streamlit-Dienst fährt hoch (Port 8501)"]
+        S2["App-Code wird von oben nach unten ausgeführt"]
+        S3["Initiale Datenbankverbindung herstellen"]
+        S4["Basisdaten via SELECT-Query laden"]
+        S5["Standard-Filterwerte setzen (z.B. letzte 30 Tage)"]
+        S6["UI-Komponenten (Layout, Sidebar) generieren"]
     end
 
-    subgraph DWH [SQLite DWH]
-        D1[Verbindungsanforderung akzeptieren]
-        D2[SQL-Anfrage nach Gesamtdaten verarbeiten]
-        D3[Tabelle an Python zurückliefern]
+    subgraph DWH ["SQLite DWH"]
+        D1["Verbindungsanforderung akzeptieren"]
+        D2["SQL-Anfrage nach Gesamtdaten verarbeiten"]
+        D3["Tabelle an Python zurückliefern"]
     end
 
     %% Verknüpfungen
@@ -44,5 +44,5 @@ flowchart TD
     S6 --> U2
     
     %% Ende des Bootstraps
-    U3 --> End((Wartet auf Interaktion / UC5))
+    U3 --> End(("Wartet auf Interaktion / UC5"))
 ```

@@ -5,25 +5,25 @@ Dieses Diagramm zeigt im Detail, was innerhalb des in UC2 ausgelösten Sub-Proze
 ```mermaid
 flowchart TD
     %% Startpunkt des Includes
-    Start((Beginn UC3)) --> P1
+    Start(("Beginn UC3")) --> P1
 
-    subgraph Python [Python (Pandas Transformation)]
-        P1[Rohdaten (DataFrames) annehmen]
-        P2[Datums- und Zeitstempel normalisieren]
-        P3[Fehlende Werte (Null/NaN) interpolieren oder droppen]
-        P4[Fakten aggregieren (z.B. Durchschnitt pro Tag)]
-        P5[Dimensionstabellen (Zeit, Patient) aktualisieren]
+    subgraph Python ["Python (Pandas Transformation)"]
+        P1["Rohdaten (DataFrames) annehmen"]
+        P2["Datums- und Zeitstempel normalisieren"]
+        P3["Fehlende Werte (Null/NaN) interpolieren oder droppen"]
+        P4["Fakten aggregieren (z.B. Durchschnitt pro Tag)"]
+        P5["Dimensionstabellen (Zeit, Patient) aktualisieren"]
     end
 
-    subgraph SQLite [SQLite Data Warehouse]
-        S1[Verbindung zur DB aufbauen (SQLAlchemy)]
-        S2[Transaktion starten (BEGIN)]
-        S3[Dimensionstabellen einfügen (INSERT OR IGNORE)]
-        S4[Faktentabelle schreiben (INSERT)]
-        S5{Fehler beim Laden?}
-        S6[Transaktion bestätigen (COMMIT)]
-        S7[Transaktion verwerfen (ROLLBACK)]
-        S8[Verbindung schließen]
+    subgraph SQLite ["SQLite Data Warehouse"]
+        S1["Verbindung zur DB aufbauen (SQLAlchemy)"]
+        S2["Transaktion starten (BEGIN)"]
+        S3["Dimensionstabellen einfügen (INSERT OR IGNORE)"]
+        S4["Faktentabelle schreiben (INSERT)"]
+        S5{"Fehler beim Laden?"}
+        S6["Transaktion bestätigen (COMMIT)"]
+        S7["Transaktion verwerfen (ROLLBACK)"]
+        S8["Verbindung schließen"]
     end
 
     %% Verknüpfungen
@@ -44,5 +44,5 @@ flowchart TD
     S5 -- Ja (z.B. Constraint Violation) --> S7
     S7 --> S8
     
-    S8 --> End((Ende / Rückgabe an UC2))
+    S8 --> End(("Ende / Rückgabe an UC2"))
 ```
