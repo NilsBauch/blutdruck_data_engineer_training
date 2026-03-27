@@ -24,12 +24,12 @@ Das Konzept adressiert direkt die vorgegebenen Projektanforderungen:
 ## Datenquellen und Schnittstellen
 
 ### 1. Kardiovaskuläre Daten (Blutdruck)
-- Bereitgestellt als CSV- oder Excel-Export aus Blutdruckmessgeräten oder Gesundheits-Apps.
-- Für die Entwicklung: Einsatz von generierten, synthetischen Datenstrukturen, die realistische Messwerte simulieren.
+- Echte, freiwillig bereitgestellte und anonymisierte Messwerte des Entwicklers.
+- Bereitgestellt als CSV-Export aus der eigenen Tracking-App.
 
 ### 2. Bewegungs- und Aktivitätsdaten
-- Nutzung von Wearable- oder Smartphone-Metriken (Aktivitätsminuten, Schrittzahl) im JSON-/CSV-Format.
-- Alternativ: Anbindung eines öffentlichen Open-Data-Sets.
+- Echte Bewegungsprofile aus der Smartwatch des Entwicklers (JSON-/CSV-Format).
+- Vollständig anonymisiert für die Verwendung im Rahmen der Projektarbeit.
 
 ### 3. Medikationshistorie
 - Excel- oder CSV-Tabellen zur Dokumentation der Verabreichung.
@@ -90,5 +90,5 @@ Das Konzept adressiert direkt die vorgegebenen Projektanforderungen:
 
 ## Datenschutz und Ethik
 Da Gesundheitsdaten besonders sensibel sind (gemäß DSGVO Art. 9), gelten für dieses Projekt strikte Vorgaben:
-- Es werden ausschließlich rein synthetische Daten genutzt.
+- Es werden echte, vom Entwickler freiwillig bereitgestellte und im Vorfeld vollständig anonymisierte Daten verarbeitet.
 - Die Arbeit versteht sich als technische Machbarkeitsstudie für eine Datenpipeline, nicht als Basis für medizinische Diagnosen der realen Welt.
