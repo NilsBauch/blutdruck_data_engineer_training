@@ -8,5 +8,6 @@ venv/
 *.duckdb
 *.sqlite
 *.db
-# data/01_raw/
-# data/02_processed/
+data/01_raw/
+data/02_processed/
+*.zip
