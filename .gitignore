@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+
+# Ignoriere später größere Datenbanken oder Rohdaten
+*.duckdb
+*.sqlite
+*.db
+# data/01_raw/
+# data/02_processed/
