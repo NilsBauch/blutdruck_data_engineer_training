@@ -1,25 +1,24 @@
-# Anforderungsdefinition: Health Monitoring für ältere Menschen
+# Anforderungen: Blutdruck-Überwachung
 
 Dieses Dokument fasst die wesentlichen Systemanforderungen für das Data Engineering Projekt zusammen. Die Einstufung hilft dabei, den Scope der Projektarbeit präzise abzugrenzen.
 
-## 1. Funktionale Anforderungen (Functional Requirements)
-*Diese Anforderungen definieren, **was** das fertige System fachlich und technisch leisten muss.*
+## 1. Was das System können muss (Funktionale Anforderungen)
 
-* **[F-01] Datenextraktion:** Das System muss fähig sein, strukturierte Daten für Blutdruck- und Medikationswerte aus der App "HealthForYou" (als manueller CSV-Export) sowie Bewegungsdaten der Smartwatch aus Google Fit über Google Takeout (in den Formaten JSON, CSV und/oder TCX) effizient einzulesen.
-* **[F-02] Datentransformation & Bereinigung:** Vorhandene Inkonsistenzen (z. B. unterschiedliche Formate für Zeitstempel) müssen in der Staging-Area in ein einheitliches Format überführt werden.
-* **[F-03] Harmonisierung der Zeitleisten:** Da Messwerte asynchron entstehen, müssen die Zeitstempel auf definierte Zeitfenster (z. B. aggregierte 15- oder 60-Minuten-Intervalle) gerundet werden.
-* **[F-04] Datenintegration (Mapping):** Blutdruckmessungen, Bewegungsdaten und Medikationszeitpunkte müssen relational über Fremdschlüssel (`Patient-ID` und die korrespondierende `Zeit-ID`) logisch miteinander verknüpft werden.
-* **[F-05] Feature Engineering:** Das System leitet komplexe Analyse-Merkmale eigenständig aus Rohdaten ab. Dazu gehören Metriken wie "Schritte im Vorfeld der Messung", "Zeit seit letzter Medikation" oder "Maximale Inaktivitätsdauer am Tag".
-* **[F-06] Relationales Data Warehouse:** Das System schreibt transformierte Datenmodelle als klassisches Star-Schema (Faktentabellen und Dimensionstabellen) weg.
-* **[F-07] Interaktive Analytik:** Es wird ein lokales Streamlit-Dashboard bereitgestellt, in dem Endnutzer die OLAP-Auswertungen dynamisch filtern und grafisch analysieren können.
+* **[F-01] Daten einlesen (ETL - Extract):** Das Programm muss Daten aus meiner Blutdruck-App (CSV) und von meiner Smartwatch (Google Takeout: JSON und CSV) laden können.
+* **[F-02] Daten aufräumen:** Unterschiedliche Schreibweisen (z. B. beim Datum) müssen korrigiert werden, damit alles zusammenpasst.
+* **[F-03] Zeiten anpassen:** Da nicht jede Sekunde gemessen wird, werden die Daten in Zeitblöcke (z. B. 15 oder 60 Minuten) zusammengefasst.
+* **[F-04] Daten verknüpfen:** Blutdruck, Schritte und Medikamente müssen über die Patienten-Nummer und die Uhrzeit logisch zusammengeführt werden.
+* **[F-05] Neue Werte berechnen:** Das System berechnet automatisch wichtige Infos, wie z. B. "Wie viele Schritte wurden vor der Messung gemacht?".
+* **[F-06] Datenbank speichern (DWH):** Die fertigen Daten werden in einem sauberen **Star-Schema** (Haupt- und Detailtabellen) in einer Datenbank gespeichert.
+* **[F-07] Auswertung (Dashboard):** Es gibt eine einfache Weboberfläche mit Streamlit, auf der man sich Diagramme anschauen und Filter benutzen kann.
 
 ---
 
 ## 2. Nicht-funktionale Anforderungen (Non-Functional Requirements)
 *Diese Anforderungen definieren, **wie** das System aus Architektursicht agieren und beschaffen sein soll.*
 
-* **[NF-01] Datenschutz und ethische Konformität:** Der Entwicklungsprozess nutzt echte, vom Entwickler freiwillig bereitgestellte und vollständig anonymisierte Gesundheitsdaten (Blutdruck und Smartwatch-Bewegungsprofile). Die finale Applikation dient der fachlichen Machbarkeitsprüfung im Rahmen der Projektarbeit, es werden keine Realdaten von Dritten verarbeitet.
-* **[NF-02] Modularität (Separation of Concerns):** Die Pipeline-Bausteine (Extract, Transform, Load) werden softwaretechnisch so gekapselt, dass künftig neue Datenformate ergänzt werden können, ohne die bestehende Logik zu beschädigen.
-* **[NF-03] Reproduzierbarkeit & Automatisierung:** Der gesamte ETL-End-to-End-Run muss über ein zentrales Steuer-Skript automatisiert und fehlerfrei gestartet werden können.
-* **[NF-04] Portabilität & Technologie-Stack:** Das Speichermedium des Data Warehouses ist dateibasiert (Festlegung: SQLite3). Die gesamte Datenpipeline (ETL) wird vorwiegend in Python 3 entwickelt. Damit kann die Applikation "Out of the box" ohne komplexe Serverkomponenten lokal gestartet werden.
-* **[NF-05] Erweiterbarkeit:** Das implementierte Star-Schema und die ETL-Pipeline müssen strukturell so ausgelegt sein, dass optionale Wetterdaten in einer späteren Phase per REST-API nahtlos hinzugefügt werden können.
+* **[NF-01] Datenschutz:** Wir benutzen nur meine eigenen Daten, die vorher anonymisiert wurden. Es werden keine Daten von anderen Personen verarbeitet.
+* **[NF-02] Baustein-Prinzip:** Das System ist so aufgebaut, dass man später leicht neue Datenquellen (z. B. eine neue App) hinzufügen kann, ohne alles umbauen zu müssen.
+* **[NF-03] Automatisierung:** Der gesamte Ablauf (ETL) sollte per Knopfdruck oder über ein einziges Skript starten.
+* **[NF-04] Technik:** Wir benutzen **Python 3** und eine kleine, einfache Datenbank (**SQLite3**). So braucht man keinen extra Server und kann alles direkt auf dem PC starten.
+* **[NF-05] Spätere Erweiterung:** Der Aufbau (Star-Schema) soll so flexibel sein, dass man später auch Wetterdaten aus dem Internet hinzufügen könnte.

@@ -1,19 +1,19 @@
-# Projektidee: Health Monitoring für ältere Menschen
-Fokus: Blutdruck, Bewegung & Medikation
+# Projektidee: Blutdruck-Überwachung für Senioren
+Fokus: Blutdruck, Bewegung & Medikamente
 
-## Kernidee
-Ein End-to-End-System zur Datenanalyse für Hypertonie-Patienten, das folgende Datenpunkte zusammenführt:
+## Die Idee
+Ich möchte ein System bauen, das verschiedene Gesundheitsdaten zusammenführt und auswertet. Es geht vor allem um diese Punkte:
 
-- Blutdruckverläufe
-- Bewegungsprofil und körperliche Aktivität (Schritte, Inaktivitätsphasen)
-- Medikationsplan (Bedarfs- und Dauermedikation wie Blutdrucksenker)
+- Wie hat sich der Blutdruck entwickelt?
+- Wie viel hat sich die Person bewegt (Schritte)?
+- Wann wurden welche Medikamente genommen?
 
-Ziel der Arbeit ist es, zu analysieren, wie sich der Blutdruck in Abhängigkeit von Bewegung, Tageszeit und Medikamentengabe entwickelt. Darüber hinaus soll untersucht werden, ob sich Risikomuster – wie beispielsweise dauerhaft hoher Blutdruck bei langanhaltender Inaktivität – automatisiert erkennen lassen.
+Das Ziel ist es, herauszufinden, wie Bewegung, die Tageszeit und Medikamente den Blutdruck beeinflussen. Außerdem möchte ich schauen, ob man Warnzeichen automatisch erkennen kann – zum Beispiel, wenn der Blutdruck hoch bleibt, obwohl sich die Person kaum bewegt.
 
 ---
 
-## Formale Anforderungen der Projektarbeit
-Das Konzept adressiert direkt die vorgegebenen Projektanforderungen:
+## Anforderungen der Projektarbeit
+Das Projekt erfüllt die offiziellen Vorgaben:
 
 > "Die Daten sollen aus mindestens drei unterschiedlichen Quellen stammen (z. B. CSV, JSON, Excel/XLSX, Datenbanken, REST APIs oder Open Data Portale)."
 
@@ -21,74 +21,69 @@ Das Konzept adressiert direkt die vorgegebenen Projektanforderungen:
 
 ---
 
-## Datenquellen und Schnittstellen
+## Woher kommen die Daten?
 
-### 1. Kardiovaskuläre Daten (Blutdruck)
-- Echte, freiwillig bereitgestellte und anonymisierte Messwerte des Entwicklers.
-- Bereitgestellt als CSV-Export aus der eigenen Tracking-App.
+### 1. Blutdruck-Werte
+- Das sind echte Messwerte von mir, die ich anonymisiert habe.
+- Ich exportiere sie als CSV-Datei aus meiner Blutdruck-App.
 
-### 2. Bewegungs- und Aktivitätsdaten
-- Echte Bewegungsprofile aus der Smartwatch des Entwicklers (JSON-/CSV-Format).
-- Vollständig anonymisiert für die Verwendung im Rahmen der Projektarbeit.
+### 2. Schritte und Aktivität
+- Diese Daten kommen von meiner Smartwatch (über Google Takeout).
+- Die Daten liegen als JSON oder CSV vor und sind ebenfalls anonymisiert.
 
-### 3. Medikationshistorie
-- Excel- oder CSV-Tabellen zur Dokumentation der Verabreichung.
-- Notwendige Attribute:
-  - Patient-ID
-  - Medikamentenpräparat
-  - Dosierung (mg)
-  - Einnahmezeitpunkt
+### 3. Medikamente
+- Eine Excel- oder CSV-Liste, in der steht, wann was genommen wurde.
+- Wichtige Infos: Welches Medikament, wie viel (mg) und wie spät es bei der Einnahme war.
 
-### 4. Optionale Erweiterung: Wetterdaten
-- Externe REST-API zur Abfrage von Außentemperatur und Luftdruck zum Messzeitpunkt.
-- Hypothese: Es bestehen messbare Korrelationen zwischen saisonalen oder wetterbedingten Einflüssen und dem Blutdruck.
+### 4. Vielleicht später: Wetterdaten
+- Ich könnte über eine API noch Wetterdaten (Temperatur, Luftdruck) abrufen.
+- Die Frage ist: Hat das Wetter auch einen Einfluss auf den Blutdruck?
 
 ---
 
-## Geplante OLAP-Analysen und Fragestellungen
+## Welche Fragen sollen beantwortet werden? (OLAP-Analyse)
 
-### Einfluss der Bewegung auf den Blutdruck
-- Signifikanzanalyse des durchschnittlichen Blutdrucks an Tagen mit hoher vs. niedriger Aktivität.
-- Identifikation spezifischer Tageszeiten mit unzureichend sinkendem Blutdruck trotz körperlicher Betätigung.
+### Hilft Bewegung dem Blutdruck?
+- Ich vergleiche den Blutdruck an Tagen mit viel Bewegung mit Tagen, an denen man faul war.
+- Gibt es Tageszeiten, an denen der Blutdruck trotz Sport nicht sinkt?
 
-### Einfluss der Medikation auf den Blutdruck
-- Zeitverlaufsanalyse des Blutdrucks in den ersten Stunden nach Verabreichung eines Wirkstoffs.
-- Vergleich der durchschnittlichen Senkungseffekte unterschiedlicher Medikamentenklassen.
+### Wie gut wirken die Medikamente?
+- Wie verändert sich der Blutdruck in den ersten Stunden nach der Tablette?
+- Wirken unterschiedliche Medikamente auch unterschiedlich stark?
 
-### Kombinierte Faktoren (Bewegung und Medikation)
-- Untersucht, ob sportliche Aktivität im Anschluss an eine Medikamenteneinnahme synergetische Effekte auf die Blutdrucksenkung hat.
-- Identifikation einer Risikogruppe: Patienten, bei denen trotz Medikation kombiniert mit Bewegung der Blutdruck anhaltend zu hoch ist.
+### Bewegung und Medikamente zusammen
+- Hilft Sport direkt nach der Tabletteneinnahme dabei, den Blutdruck besser zu senken?
+- Gibt es Momente, in denen beides (Sport + Medikamente) nicht ausreicht?
 
-### Präventives Monitoring (Sturz- und Gefahrenanalyse)
-- Auswertung außergewöhnlich langer Inaktivitätsphasen als Indikator für mögliche Stürze oder gesundheitliche Vorfälle.
-- Alarmierungslogik bei Kombination aus hoher Inaktivität, verpasster Medikation und messbar erhöhtem Blutdruck.
-
----
-
-## Grobe technische Architektur (ETL & DWH)
-
-### 1. Extract
-- Flat-File-Lader (CSV/Excel) für strukturierte Gesundheits- und Medikationsdaten.
-- JSON-Verarbeitung für hierarchische Wearable-Daten.
-
-### 2. Transform
-- Harmonisierung der Zeitzonen und -achsen (Aggregation auf standardisierte Intervalle, z.B. 15 Minuten).
-- Relationales Mapping der Daten über die `Patient-ID` und den Erfassungszeitraum.
-- Feature Engineering zur Ableitung neuer Kennzahlen ("Gesamtschritte im 2-h-Intervall", "Vergangene Zeit seit letzter Dosis").
-
-### 3. Load
-- **Data Warehouse Ansatz (Star-Schema)**:
-  - Faktentabelle für alle gemessenen Vitalwerte und Aktivitäten.
-  - Dimensionen für Patienten, Zeit, Medikamente und Aktivitäten.
-- **Data Marts**: Abgeleitete Tabellen für spezifische Dashboard-Ansichten ("Blutdruck x Bewegung").
-
-### 4. Visualisierung
-- Entwicklung einer analytischen Streamlit-Applikation.
-- Interaktive Zeitreihenanalyse, Pivotierungsmöglichkeiten und aggregierte KPIs zur schnellen Triage.
+### Warnsignale erkennen
+- Wenn sich jemand ungewöhnlich lange gar nicht bewegt, könnte das ein Sturz sein.
+- Ein Alarm könnte ausgelöst werden, wenn jemand seine Tabletten vergessen hat, der Blutdruck hoch ist und er sich nicht bewegt.
 
 ---
 
-## Datenschutz und Ethik
-Da Gesundheitsdaten besonders sensibel sind (gemäß DSGVO Art. 9), gelten für dieses Projekt strikte Vorgaben:
-- Es werden echte, vom Entwickler freiwillig bereitgestellte und im Vorfeld vollständig anonymisierte Daten verarbeitet.
-- Die Arbeit versteht sich als technische Machbarkeitsstudie für eine Datenpipeline, nicht als Basis für medizinische Diagnosen der realen Welt.
+## Technik im Hintergrund (ETL & DWH)
+
+### 1. Daten einsammeln (Extract)
+- CSV- und Excel-Dateien einlesen.
+- JSON-Daten von der Smartwatch verarbeiten.
+
+### 2. Daten aufbereiten (Transform)
+- Die Zeiten vereinheitlichen (z. B. alles auf 15-Minuten-Blöcke zusammenfassen).
+- Die Daten über die Patienten-ID und die Zeit miteinander verknüpfen.
+- Neue Werte berechnen (z. B. "Wie lange ist die letzte Tablette her?").
+
+### 3. Daten speichern (Load)
+- **Data Warehouse (Star-Schema)**:
+  - Eine Haupttabelle für alle Messwerte.
+  - Zusatztabellen für Details zu Patienten, Zeit, Medikamenten und Aktivitäten.
+
+### 4. Anzeigen der Ergebnisse (Visualisierung)
+- Eine App mit Streamlit bauen.
+- Dort kann man sich Diagramme anschauen und die Daten filtern.
+
+---
+
+## Datenschutz
+Da es um Gesundheitsdaten geht, passe ich besonders auf:
+- Ich benutze nur meine eigenen Daten und mache sie komplett anonym.
+- Das Projekt ist eine technische Übung und keine echte medizinische Beratung.
