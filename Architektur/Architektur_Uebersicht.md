@@ -5,23 +5,23 @@ Es veranschaulicht den Weg von den Datenquellen über die Extraktion und ETL-Ver
 
 Das Setup basiert auf **Python 3** als primärer Programmiersprache für den gesamten ETL-Prozess und **SQLite3** für die persistente Datenhaltung im Data Warehouse.
 
-## Datenquellen und Formate
+### Aufbau der Rohdaten (`01_raw`)
+Um mehrere Patienten zu unterstützen, werden die Daten in nutzerspezifischen Unterordnern gespeichert. Eine detaillierte Erläuterung der Verknüpfungslogik finden Sie in der [Datenquellen-Verknüpfung](file:///c:/Users/nilsb/OneDrive/Nils/weiterbildung/DataEngineer/Projektarbeit/Blutdruck/Architektur/Datenquellen_Verknuepfung.md).
+
+## 1. Datenquellen und Formate
 
 1.  **HealthForYou App (Blutdruck & Medikation):** 
     *   **Methode:** Manueller Datenexport direkt aus der Applikation.
-    *   **Format:** `CSV` (Comma-Separated Values). Enthält typischerweise Tabellenstrukturen mit definierten Spalten wie Datum, Uhrzeit, Systole, Diastole, Puls.
+    *   **Dateipfad:** `data/01_raw/patient_<ID>/csv/HealthForYouApp_DataExport.csv`
+    *   **Format:** `CSV` (SVD-Werte: Systole, Diastole, Puls).
 2.  **Google Fit / Smartwatch (Aktivitäts- & Bewegungsdaten):**
-    *   **Methode:** Automatisierter/Manueller Export aller Gesundheits- und Fitnessdaten über den **Google Takeout** Dienst.
-    *   **Formate:** 
-        *   `JSON` (JavaScript Object Notation): Sehr tiefgreifende und komplexe Fitnessdaten (z. B. feingranulare Schritt-Aggregate, Schlafanalyse, tägliche Aktivitäts-Metriken) werden von Google Fit zumeist als unstrukturierte oder halbstrukturierte JSON-Dateien ausgegeben, oft iteriert in diversen Unterordnern.
-        *   `CSV`: Standard-Aktivitäten-Metriken über den gesamten Export-Zeitraum liegen teilweise strukturiert vor.
-        *   `TCX` (Training Center XML): Besonders detaillierte Einzel-Aufzeichnungen (wie bspw. ein konkreter Spaziergang oder Lauf mit GPS-Tracking) werden als XML-Struktur (TCX) mitgeliefert.
-
-**Für dieses Projekt fokussieren wir uns bei Google Fit primär auf die Aufbereitung der `JSON`- sowie etwaiger `CSV`-Rohdaten.**
+    *   **Methode:** Export aller Fitnessdaten über **Google Takeout**.
+    *   **Dateipfad:** `data/01_raw/patient_<ID>/json/`
+    *   **Formate:** `JSON` (detaillierte Schritte, Schlaf), `CSV` (Tageszusammenfassungen).
 
 ---
 
-## Architekturdiagramm (Mermaid)
+## 2. Architekturdiagramm (Mermaid)
 
 ```mermaid
 flowchart TD
@@ -31,10 +31,10 @@ flowchart TD
         B["Smartwatch (via Google Fit)"]
     end
 
-    %% Export/Rohdaten Layer
-    subgraph Export ["Staging & Rohdaten-Ablage"]
-        C[("Manueller App-Export \n (Format: CSV)")]
-        D[("Google Takeout Export \n (Formate: JSON, CSV, TCX)")]
+    %% Export/Rohdaten Layer (Umstrukturiert)
+    subgraph Export ["Staging & Rohdaten (patient_001)"]
+        C[("csv/ \n (Blutdruck-Export)")]
+        D[("json/ \n (Smartwatch-Export)")]
     end
 
     %% Pipeline Layer
