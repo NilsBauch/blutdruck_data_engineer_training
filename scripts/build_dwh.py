@@ -28,7 +28,7 @@ def migrate_dimensions():
     out_conn.executemany("INSERT INTO dim_user (user_id, gender, age) VALUES (?, ?, ?)", users)
     
     # dim_medication
-    meds = in_conn.execute("SELECT id, name, dose_mg, description FROM master_medications").fetchall()
+    meds = in_conn.execute("SELECT med_id, name, dose_mg, description FROM master_medications").fetchall()
     out_conn.executemany("INSERT INTO dim_medication (med_id, name, dosage_mg, category) VALUES (?, ?, ?, ?)", meds)
     
     # dim_lifestyle

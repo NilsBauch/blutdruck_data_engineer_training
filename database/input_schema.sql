@@ -2,7 +2,7 @@
 
 -- 1. Stammdaten: Medikamente
 CREATE TABLE IF NOT EXISTS master_medications (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    med_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     dose_mg REAL NOT NULL,
     description TEXT
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS master_lifestyle (
 
 -- 3. Verknüpfung: Medikationsplan pro Nutzer
 CREATE TABLE IF NOT EXISTS user_medication_plan (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    plan_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     medication_id INTEGER NOT NULL,
     time_of_day TEXT, -- 'morgens', 'mittags', 'abends', 'nachts'
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS user_medication_plan (
 
 -- 4. Rohdaten: Blutdruck (SVD) aus App
 CREATE TABLE IF NOT EXISTS raw_blood_pressure (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bp_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     timestamp TEXT NOT NULL, -- ISO-Format YYYY-MM-DD HH:MM:SS
     systolic INTEGER,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS raw_blood_pressure (
 
 -- 5. Rohdaten: Aktivität & Körper aus Smartwatch
 CREATE TABLE IF NOT EXISTS raw_activity_daily (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    activity_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     date TEXT NOT NULL, -- ISO YYYY-MM-DD
     steps INTEGER,

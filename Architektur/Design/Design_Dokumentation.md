@@ -65,9 +65,11 @@ Ein Python-Skript (`build_dwh.py`) liest den Eingang aus, berechnet den **Pulsdr
 | `raw_activity_daily`| `activity_minutes`| `fact_health_metrics` | `activity_minutes` | Direkte Übernahme |
 | `master_lifestyle` | `movement_type` | `dim_lifestyle` | `movement_type` | Übernahme Aktivitätsstatus |
 | `master_lifestyle` | `is_smoker` | `dim_lifestyle` | `is_smoker` | Übernahme Raucherstatus |
+| `master_lifestyle` | `user_id` | `dim_user` | `user_id` | PK-Migration |
 | `master_lifestyle` | `age` | `dim_user` | `age` | Direkte Übernahme |
 | `master_lifestyle` | `gender` | `dim_user` | `gender` | Übernahme (m/w/d) als `varchar(1)` |
 | `user_medication_plan`| `time_of_day` | `fact_health_metrics` | `is_post_medication` | `True`, falls Messung innerhalb 4h nach Einnahme (morgens=8h, mittags=13h, abends=19h, nachts=23h) |
+| `master_medications`| `med_id` | `dim_medication` | `med_id` | PK-Migration |
 | `master_medications`| `name`, `dose_mg` | `dim_medication` | `name`, `dosage_mg` | Stammdaten-Migration |
 
 ---
