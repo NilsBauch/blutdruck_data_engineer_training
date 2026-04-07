@@ -61,6 +61,9 @@ def migrate_facts():
     in_conn = sqlite3.connect(INPUT_DB)
     out_conn = sqlite3.connect(DWH_DB)
     
+    # Basis-Werte für Zeiten definieren (morgens=8h, etc.)
+    time_map = {'morgens': 8, 'mittags': 13, 'abends': 19, 'nachts': 23}
+    
     # Wir nehmen Blutdruck-Messungen als Basis für die Fakten
     bp_data = in_conn.execute('''
         SELECT user_id, timestamp, systolic, diastolic, pulse 
@@ -83,12 +86,24 @@ def migrate_facts():
         weight = activity[1] if activity else None
         act_min = activity[2] if activity else None
         
-        # Medication Plan (Einfache Annahme: Wenn Messung nach 08:00 und Morgens-Plan existiert)
-        # TODO: Komplexere Logik für Morgen/Abend
+        # Prüfung auf Medikations-Status (is_post_medication)
+        med_plan = in_conn.execute('''
+            SELECT time_of_day, medication_id 
+            FROM user_medication_plan 
+            WHERE user_id = ? AND is_active = 1
+        ''', (user_id,)).fetchall()
+        
         is_post = False
-        if dt.hour >= 8 and dt.hour <= 12:
-            is_post = True
-            
+        active_med_id = 1 # Fallback, falls kein Plan existiert
+        
+        for tod, med_id in med_plan:
+            planned_hour = time_map.get(tod.lower())
+            if planned_hour is not None:
+                # Logik: Messung liegt innerhalb von 4h NACH geplanter Einnahme
+                if planned_hour <= dt.hour < (planned_hour + 4):
+                    is_post = True
+                    active_med_id = med_id
+        
         out_conn.execute('''
             INSERT INTO fact_health_metrics (
                 user_id, date_key, time_key, med_id, lifestyle_id,
@@ -96,7 +111,7 @@ def migrate_facts():
                 is_post_medication, pulse_pressure
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (user_id, date_key, time_key, 1, user_id, sys, dia, pul, steps, weight, act_min, is_post, sys - dia))
+        ''', (user_id, date_key, time_key, active_med_id, user_id, sys, dia, pul, steps, weight, act_min, is_post, sys - dia))
         
     out_conn.commit()
     in_conn.close()
