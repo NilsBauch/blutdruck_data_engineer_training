@@ -1,10 +1,15 @@
-# Aktivitätsdiagramm (Whitebox): UC4 - Dashboard starten
-
-Dieses Diagramm verdeutlicht die Architektur beim Starten der analytischen Oberfläche. Es repräsentiert die Initialisierung der Streamlit-Webanwendung und die erste Datenbereitstellung.
-
-![Diagramm](../images/activity_diagram_uc4_0.png)
-
-```mermaid
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <style>
+        body { background: white; margin: 20px; }
+        .mermaid { display: flex; justify-content: center; }
+    </style>
+</head>
+<body>
+    <div class="mermaid">
 flowchart TD
     %% Swimlanes
     subgraph UI ["Benutzer / Webbrowser"]
@@ -47,5 +52,6 @@ flowchart TD
     
     %% Ende des Bootstraps
     U3 --> End(("Wartet auf Interaktion / UC5"))
-```
-
+    </div>
+</body>
+</html>

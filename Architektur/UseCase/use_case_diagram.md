@@ -1,6 +1,6 @@
 # Use-Case-Diagramm: Health Monitoring (Blutdruck & Aktivität)
 
-Dieses Modell beschreibt die funktionalen Hauptanwendungsfälle deines Data-Engineering-Projekts aus der Perspektive der interagierenden Akteure.
+Dieses Modell beschreibt die funktionalen Hauptanwendungsfälle des Data-Engineering-Projekts aus der Perspektive der interagierenden Akteure.
 
 ## 1. Übersicht der Akteure
 * **Patient / Data Engineer:** Die handelnde Person, die Daten zur Verfügung stellt, den Pipeline-Prozess überwacht und das analytische Dashboard konsumiert.
@@ -8,7 +8,11 @@ Dieses Modell beschreibt die funktionalen Hauptanwendungsfälle deines Data-Engi
 
 ---
 
-## 2. UML Use-Case Diagramm (Mermaid)
+## 2. UML Use-Case Diagramm
+
+![Use-Case Diagramm](../images/use_case_diagram.png)
+
+![Diagramm](../images/use_case_diagram_0.png)
 
 ```mermaid
 flowchart LR
@@ -56,3 +60,4 @@ flowchart LR
 | **Daten transformieren & integrieren** | Innerhalb des Workflows reinigt das System automatisch die Zeitleisten, reichert die Features an und schreibt die aggregierten Fakten ins DWH (Star-Schema). *Die Ausführung des ETL-Workflows inkludiert diesen Schritt zwingend (`<<includes>>`).* |
 | **Dashboard starten** | Der Anwender ruft die Streamlit-Webanwendung auf, die sich direkt mit dem lokalen Data Warehouse verbindet. |
 | **Analysen filtern & explorieren** | Der Anwender justiert Betrachtungszeiträume, filtert nach Metriken (z. B. "nur hohe Inaktivität") und analysiert die grafischen Korrelationen zwischen Medikamenten, Blutdruck und Bewegung. |
+

@@ -24,7 +24,9 @@ Um mehrere Patienten zu unterstützen, werden die Daten in nutzerspezifischen Un
 
 ---
 
-## 2. Architekturdiagramm (Mermaid)
+## 2. Architekturdiagramm
+
+![Architektur Übersicht](./images/architektur_uebersicht.png)
 
 ```mermaid
 flowchart TD

@@ -1,4 +1,4 @@
-# Projektidee: Blutdruck-Überwachung für Senioren
+# Projektidee: Health Monitoring
 Fokus: Blutdruck, Bewegung & Medikamente
 
 ## Die Idee
