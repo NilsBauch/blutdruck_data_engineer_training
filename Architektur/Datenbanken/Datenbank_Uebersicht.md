@@ -33,7 +33,7 @@ flowchart TD
 
     %% Warehouse
     subgraph DWH ["4. Analytics Layer (blutdruck_dwh.db)"]
-        F1[("Fact: fact_health_log")]
+        F1[("Fact: fact_health_metrics")]
         D1[("Dim: dim_patient")]
         D2[("Dim: dim_medication")]
     end

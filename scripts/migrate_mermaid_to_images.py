@@ -46,19 +46,26 @@ def process_file(file_path):
 
     new_content = content
     for i, code in enumerate(matches):
-        # Eindeutigen Dateinamen erzeugen
         file_basename = os.path.basename(file_path).replace('.md', '')
         img_name = f"{file_basename}_{i}.png"
         img_path = os.path.join(IMAGE_DIR, img_name)
         
-        if generate_mermaid_image(code, img_path):
-            print(f"  -> Bild generiert: {img_name}")
-            # Bild über dem Code-Block einfügen, falls nicht schon vorhanden
-            img_tag = f"![Diagramm](./images/{img_name})\n\n"
-            if img_tag not in new_content:
-                # Wir suchen die stelle im original content
+        # Falls es sich um die Design_Dokumentation handelt, nutzen wir die festen Namen
+        if "Design_Dokumentation" in file_basename:
+            if "ERM (Business-DB)" in content[:content.find(code)]:
+                img_name = "design_erm_business.png"
+            elif "mER (Star-Schema)" in content[:content.find(code)]:
+                img_name = "design_mer_dwh.png"
+            img_path = os.path.join(IMAGE_DIR, img_name)
+
+        if generate_mermaid_image(code.strip(), img_path):
+            print(f"  -> Bild aktualisiert: {img_name}")
+            # Nur Tag einfügen, wenn kein Bild-Link direkt davor oder danach ist
+            img_tag = f"![Diagramm](./images/{img_name})"
+            if img_name not in content:
+                # Einfaches Einfügen über dem Block
                 search_str = f"```mermaid\n{code}\n```"
-                new_content = new_content.replace(search_str, img_tag + search_str)
+                new_content = new_content.replace(search_str, img_tag + "\n\n" + search_str)
         else:
             print(f"  -> FEHLER bei Bildgenerierung für {img_name}")
 

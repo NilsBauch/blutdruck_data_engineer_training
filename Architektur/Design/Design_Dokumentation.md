@@ -39,7 +39,7 @@ Die Daten werden sauber getrennt gehalten. Patienten-Profile liegen in einer Tab
 Die `blutdruck_dwh.db` ist für die Analyse optimiert. Hierfür wird ein **Star-Schema** eingesetzt.
 
 ### Wie das funktioniert:
-In der Mitte liegt eine große **Fakten-Tabelle** (`fact_health_metrics`). Drumherum liegen **Dimensionen** (Nutzer, Zeit, Medikamente, Lifestyle), die einfach per Join verknüpft werden können. Das ist viel schneller als im verzweigten Eingangs-Modell zu suchen.
+In der Mitte liegt eine große **Fakten**: `fact_health_metrics` (Messwerte, Pulsdruck, Flags). Drumherum liegen **Dimensionen** (Nutzer, Zeit, Medikamente, Lifestyle), die einfach per Join verknüpft werden können. Das ist viel schneller als im verzweigten Eingangs-Modell zu suchen.
 
 ### Star-Schema Modell (mER)
 ![mER Star Schema](../images/design_mer_dwh.png)
@@ -62,8 +62,11 @@ Ein Python-Skript (`build_dwh.py`) liest den Eingang aus, berechnet den **Pulsdr
 | `raw_blood_pressure`| `timestamp` | `fact_health_metrics` | `time_key` | Extraktion der Uhrzeit (HH:MM) |
 | `raw_activity_daily`| `steps` | `fact_health_metrics` | `steps_hourly` | Zuordnung zum Tag der Messung |
 | `raw_activity_daily`| `weight_kg` | `fact_health_metrics` | `weight_kg` | Direkte Übernahme |
-| `master_lifestyle` | `movement_type` | `dim_lifestyle` | `movement_type` | Übernahme des Aktivitätsstatus |
-| `master_lifestyle` | `name`, `age` | `dim_user` | `name`, `age` | Stammdaten-Migration |
+| `raw_activity_daily`| `activity_minutes`| `fact_health_metrics` | `activity_minutes` | Direkte Übernahme |
+| `master_lifestyle` | `movement_type` | `dim_lifestyle` | `movement_type` | Übernahme Aktivitätsstatus |
+| `master_lifestyle` | `is_smoker` | `dim_lifestyle` | `is_smoker` | Übernahme Raucherstatus |
+| `master_lifestyle` | `age` | `dim_user` | `age` | Direkte Übernahme |
+| `master_lifestyle` | `gender` | `dim_user` | `gender` | Übernahme (m/w/d) als `varchar(1)` |
 | `master_medications`| `name`, `dose_mg` | `dim_medication` | `name`, `dosage_mg` | Stammdaten-Migration |
 
 ---
@@ -77,8 +80,8 @@ Das ist ein wichtiger Punkt im Data Engineering: Was passiert, wenn ein Patient 
 
 ### Technische Spalten:
 Dazu werden zwei Zeitstempel genutzt:
-*   `valid_from`: Ab wann gilt dieser Zustand?
-*   `valid_to`: Bis wann galt dieser Zustand? (NULL = aktuell gültig).
+*   `SCD_valid_from`: Ab wann gilt dieser Zustand?
+*   `SCD_valid_to`: Bis wann galt dieser Zustand? (NULL = aktuell gültig).
 
 ---
 
@@ -88,84 +91,120 @@ Dazu werden zwei Zeitstempel genutzt:
 
 ### ERM (Business-DB)
 ```mermaid
-erDiagram
-    PATIENT ||--o{ MEDICATION_PLAN : has
-    PATIENT ||--o{ BLOOD_PRESSURE : records
-    PATIENT ||--o{ ACTIVITY_DAILY : tracks
-    MEDICATION ||--o{ MEDICATION_PLAN : includes
+flowchart TD
+    %% Entitäten (Rechtecke)
+    P[master_lifestyle]
+    MP[user_medication_plan]
+    BP[raw_blood_pressure]
+    AD[raw_activity_daily]
+    M[master_medications]
 
-    PATIENT {
-        int user_id PK
-        string name
-        int age
-        string lifestyle_info
-    }
-    MEDICATION {
-        int med_id PK
-        string name
-        float dose_mg
-    }
-    MEDICATION_PLAN {
-        int id PK
-        int user_id FK
-        int med_id FK
-        string time_of_day
-    }
-    BLOOD_PRESSURE {
-        int id PK
-        int user_id FK
-        datetime ts
-        int systolic
-        int diastolic
-    }
-    ACTIVITY_DAILY {
-        int id PK
-        int user_id FK
-        date day
-        int steps
-    }
+    %% Beziehungen (Rauten)
+    REL_HAS{hat_plan}
+    REL_REC{erfasst}
+    REL_TRACK{trackt}
+    REL_PLAN{gehört_zu}
+
+    %% Attribute master_user_lifestyle
+    P --- p1([<u>user_id</u>])
+    P --- p3([age])
+    P --- p4([gender])
+    P --- p5([is_smoker])
+    P --- p6([movement_type])
+    P --- p7([raw_data_folder])
+
+    %% Attribute master_medications
+    M --- m1([<u>med_id</u>])
+    M --- m2([name])
+    M --- m3([dose_mg])
+    M --- m4([description])
+
+    %% Attribute user_medication_plan
+    MP --- mp1([<u>plan_id</u>])
+    MP --- mp2([user_id FK])
+    MP --- mp3([medication_id FK])
+    MP --- mp4([time_of_day])
+    MP --- mp5([is_active])
+
+    %% Attribute raw_blood_pressure
+    BP --- bp1([<u>bp_id</u>])
+    BP --- bp2([user_id FK])
+    BP --- bp3([timestamp])
+    BP --- bp4([systolic])
+    BP --- bp5([diastolic])
+    BP --- bp6([pulse])
+    BP --- bp7([is_manual])
+
+    %% Attribute raw_activity_daily
+    AD --- ad1([<u>activity_id</u>])
+    AD --- ad2([user_id FK])
+    AD --- ad3([date])
+    AD --- ad4([steps])
+    AD --- ad5([activity_minutes])
+    AD --- ad6([weight_kg])
+
+    %% Verbindungen mit Kardinalitäten
+    P -- 1 --- REL_HAS
+    REL_HAS -- n --- MP
+    P -- 1 --- REL_REC
+    REL_REC -- n --- BP
+    P -- 1 --- REL_TRACK
+    REL_TRACK -- n --- AD
+    M -- 1 --- REL_PLAN
+    REL_PLAN -- n --- MP
 ```
 
 ### mER (Star-Schema)
 ```mermaid
 erDiagram
-    FACT_HEALTH_METRICS }o--|| DIM_USER : who
-    FACT_HEALTH_METRICS }o--|| DIM_DATE : when
-    FACT_HEALTH_METRICS }o--|| DIM_MEDICATION : treatment
-    FACT_HEALTH_METRICS }o--|| DIM_LIFESTYLE : context
+    fact_health_metrics }o--|| dim_user : who
+    fact_health_metrics }o--|| dim_date : when
+    fact_health_metrics }o--|| dim_medication : treatment
+    fact_health_metrics }o--|| dim_lifestyle : context
 
-    FACT_HEALTH_METRICS {
+    fact_health_metrics {
         int fact_id PK
         int user_id FK
         int date_key FK
+        string time_key
         int med_id FK
         int lifestyle_id FK
         int systolic
         int diastolic
+        int pulse
+        int steps_hourly
+        float weight_kg
+        int activity_minutes
+        boolean is_post_medication
         int pulse_pressure
-        int steps
     }
-    DIM_USER {
+    dim_user {
         int user_id PK
-        string name
+        varchar(1) gender
         int age
     }
-    DIM_DATE {
+    dim_date {
         int date_key PK
         date full_date
+        int day
+        int month
+        int year
         string day_name
         boolean is_weekend
     }
-    DIM_MEDICATION {
+    dim_medication {
         int med_id PK
         string name
         float dosage_mg
+        string category
+        date SCD_valid_from
+        date SCD_valid_to
     }
-    DIM_LIFESTYLE {
+    dim_lifestyle {
         int lifestyle_id PK
         boolean is_smoker
         string movement_type
-        string SCD_valid_from
-        string SCD_valid_to
+        date SCD_valid_from
+        date SCD_valid_to
     }
 ```

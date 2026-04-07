@@ -21,9 +21,9 @@ INSERT INTO master_medications (name, dose_mg, description) VALUES
 ('HCT', 25.0, 'Diuretikum');
 
 -- 2. Nutzerprofil (Patient 001)
--- Erfassung als Raucher, Bewegungstyp 'wenig', Alter 51
-INSERT INTO master_lifestyle (user_id, name, age, is_smoker, movement_type, raw_data_folder) 
-VALUES (1, 'Patient 001', 51, 1, 'wenig', 'patient_001');
+-- Erfassung als Raucher, Bewegungstyp 'wenig', Alter 51, Geschlecht 'm'
+INSERT INTO master_lifestyle (user_id, name, age, gender, is_smoker, movement_type, raw_data_folder) 
+VALUES (1, 'Patient 001', 51, 'm', 1, 'wenig', 'patient_001');
 
 -- 3. Medikationsplan für Patient 001
 -- Verknüpfung mit Ramipril 5mg (ID 2 in obiger Liste)

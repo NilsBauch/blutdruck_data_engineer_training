@@ -7,7 +7,7 @@
 -- 1. Dimension: Nutzer
 CREATE TABLE IF NOT EXISTS dim_user (
     user_id INTEGER PRIMARY KEY,
-    name TEXT,
+    gender VARCHAR(1),
     age INTEGER
 );
 
@@ -16,14 +16,18 @@ CREATE TABLE IF NOT EXISTS dim_medication (
     med_id INTEGER PRIMARY KEY,
     name TEXT,
     dosage_mg REAL,
-    category TEXT
+    category TEXT,
+    SCD_valid_from DATE DEFAULT '2000-01-01',
+    SCD_valid_to DATE -- NULL = aktuell
 );
 
 -- 3. Dimension: Lifestyle
 CREATE TABLE IF NOT EXISTS dim_lifestyle (
     lifestyle_id INTEGER PRIMARY KEY,
     is_smoker BOOLEAN,
-    movement_type TEXT -- 'wenig', 'mittel', 'sportlich'
+    movement_type TEXT, -- 'wenig', 'mittel', 'sportlich'
+    SCD_valid_from DATE DEFAULT '2000-01-01',
+    SCD_valid_to DATE -- NULL = aktuell
 );
 
 -- 4. Dimension: Zeit/Datum

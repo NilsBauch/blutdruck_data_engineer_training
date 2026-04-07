@@ -23,9 +23,9 @@ def migrate_dimensions():
     in_conn = sqlite3.connect(INPUT_DB)
     out_conn = sqlite3.connect(DWH_DB)
     
-    # dim_user
-    users = in_conn.execute("SELECT user_id, name, age FROM master_lifestyle").fetchall()
-    out_conn.executemany("INSERT INTO dim_user (user_id, name, age) VALUES (?, ?, ?)", users)
+    # dim_user (Anonymisiert: Gender statt Name)
+    users = in_conn.execute("SELECT user_id, gender, age FROM master_lifestyle").fetchall()
+    out_conn.executemany("INSERT INTO dim_user (user_id, gender, age) VALUES (?, ?, ?)", users)
     
     # dim_medication
     meds = in_conn.execute("SELECT id, name, dose_mg, description FROM master_medications").fetchall()

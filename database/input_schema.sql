@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS master_lifestyle (
     user_id INTEGER PRIMARY KEY,
     name TEXT,
     age INTEGER,
+    gender VARCHAR(1), -- 'm', 'w', 'd'
     is_smoker BOOLEAN DEFAULT 0,
     movement_type TEXT, -- 'wenig', 'mittel', 'sportlich'
     raw_data_folder TEXT -- Name des Unterverzeichnisses in data/01_raw/

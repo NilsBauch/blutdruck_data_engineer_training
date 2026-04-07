@@ -10,6 +10,10 @@ SEED_PATH = os.path.join(BASE_DIR, 'database', 'populate_master_data.sql')
 def init_db():
     print(f"Initialisiere Datenbank unter: {DB_PATH}")
     
+    if os.path.exists(DB_PATH):
+        os.remove(DB_PATH)
+        print("Vorhandene Datenbank gelöscht.")
+    
     # Verbindung herstellen
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
