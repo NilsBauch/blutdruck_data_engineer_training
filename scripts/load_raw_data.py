@@ -108,13 +108,64 @@ def load_activity_data(user_id, patient_folder):
     conn.close()
     print(f"[Activity] {count} Tage für User {user_id} geladen.")
 
+def load_user_profile(user_id, patient_folder):
+    profile_path = os.path.join(RAW_DATA_DIR, patient_folder, 'profile', 'user_profile.json')
+    if not os.path.exists(profile_path):
+        print(f"[Profile] JSON nicht gefunden: {profile_path}")
+        return
+
+    print(f"[Profile] Lade {profile_path}...")
+    with open(profile_path, 'r', encoding='utf-8') as f:
+        profile = json.load(f)
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # 1. Master Lifestyle aktualisieren (UPSERT)
+    ui = profile.get('user_info', {})
+    ls = profile.get('lifestyle', {})
+    
+    cursor.execute('''
+        INSERT INTO master_lifestyle (user_id, name, age, gender, is_smoker, movement_type, raw_data_folder)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(user_id) DO UPDATE SET
+            name=excluded.name,
+            age=excluded.age,
+            gender=excluded.gender,
+            is_smoker=excluded.is_smoker,
+            movement_type=excluded.movement_type
+    ''', (user_id, ui.get('name'), ui.get('age'), ui.get('gender'), 
+          ls.get('is_smoker'), ls.get('movement_type'), patient_folder))
+
+    # 2. Medikationsplan aktualisieren
+    # Zuerst alte Einträge für diesen Nutzer löschen
+    cursor.execute("DELETE FROM user_medication_plan WHERE user_id = ?", (user_id,))
+    
+    plan = profile.get('medication_plan', [])
+    for med in plan:
+        # MedID über Name und Dosis ermitteln
+        cursor.execute("SELECT med_id FROM master_medications WHERE name = ? AND dose_mg = ?", 
+                     (med.get('medication_name'), med.get('dosage_mg')))
+        res = cursor.fetchone()
+        if res:
+            cursor.execute('''
+                INSERT INTO user_medication_plan (user_id, medication_id, time_of_day, is_active)
+                VALUES (?, ?, ?, 1)
+            ''', (user_id, res[0], med.get('time_of_day')))
+        else:
+            print(f"[Profile] WARNUNG: Medikament '{med.get('medication_name')}' mit {med.get('dosage_mg')}mg nicht im Katalog gefunden!")
+
+    conn.commit()
+    conn.close()
+    print(f"[Profile] Daten für User {user_id} erfolgreich synchronisiert.")
+
 def main():
     print(f"=== ETL-PROZESS START ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')}) ===")
     
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Alle registrierten Nutzer und deren Verzeichnisse abrufen
+    # Nutzer aus master_lifestyle abrufen (oder Initialisierung sicherstellen)
     try:
         cursor.execute("SELECT user_id, name, raw_data_folder FROM master_lifestyle")
         users = cursor.fetchall()
@@ -124,7 +175,8 @@ def main():
         return
 
     if not users:
-        print("Keine Nutzer mit Verzeichnis-Metadaten in master_lifestyle gefunden.")
+        print("Keine Nutzer in master_lifestyle gefunden. Starte Initialisierung für ID 1...")
+        users = [(1, 'Patient 001', 'patient_001')]
     
     for user_id, name, raw_folder in users:
         if not raw_folder:
@@ -133,7 +185,10 @@ def main():
             
         print(f"\n--- Verarbeite Nutzer: {name} (ID: {user_id}, Ordner: {raw_folder}) ---")
         
-        # Staging: Daten für diesen Nutzer zurücksetzen
+        # 0. Nutzerprofil & Medikationsplan aus JSON (NEU)
+        load_user_profile(user_id, raw_folder)
+
+        # Staging: Messdaten für diesen Nutzer zurücksetzen (Rohdaten-Tabellen)
         cursor.execute("DELETE FROM raw_blood_pressure WHERE user_id = ?", (user_id,))
         cursor.execute("DELETE FROM raw_activity_daily WHERE user_id = ?", (user_id,))
         conn.commit()
