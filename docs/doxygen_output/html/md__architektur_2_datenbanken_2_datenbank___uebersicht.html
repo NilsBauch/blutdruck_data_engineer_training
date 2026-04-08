@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Health Monitoring Data Pipeline: Datenbank- &amp; ETL-Übersicht</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Health Monitoring Data Pipeline<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">An end-to-end data engineering project for blood pressure and activity tracking.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Suchen',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md__architektur_2_datenbanken_2_datenbank___uebersicht.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Datenbank- &amp; ETL-Übersicht </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md10"></a></p>
+<p>Diese Dokumentation beschreibt die Schichtenarchitektur der Blutdruck-Monitoring-Plattform, die verwendeten SQLite-Datenbanken und die ETL-Logik.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+1. Datenfluss-Diagramm</h1>
+<p><img src="../images/datenbank_uebersicht.png" alt="Datenfluss Übersicht" class="inline"/></p>
+<div class="image">
+<img src="datenbank_uebersicht_0.png" alt=""/>
+<div class="caption">
+Diagramm</div></div>
+    <div class="fragment"><div class="line">flowchart TD</div>
+<div class="line">    %% Datenquellen</div>
+<div class="line">    subgraph Quellen [&quot;1. Rohdaten (Filesystem)&quot;]</div>
+<div class="line">        direction LR</div>
+<div class="line">        CSV_BP[&quot;Blutdruck-App \n (HealthForYouApp_DataExport.csv)&quot;]</div>
+<div class="line">        JSON_STEPS[&quot;Smartwatch-Schritte \n (Google Fit .json)&quot;]</div>
+<div class="line">        CSV_ACT[&quot;Smartwatch-Aktivität \n (Tägliche_Aktivität.csv)&quot;]</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% ETL Prozess</div>
+<div class="line">    subgraph ETL [&quot;2. ETL-Orchestrierung (Python)&quot;]</div>
+<div class="line">        P0[&quot;run_pipeline.py \n (Master Script)&quot;]</div>
+<div class="line">        P1[&quot;load_raw_data.py \n (Extract &amp; Load)&quot;]</div>
+<div class="line">        P2[&quot;build_dwh.py \n (Transform)&quot;]</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Staging Area</div>
+<div class="line">    subgraph Staging [&quot;3. Staging Area (blutdruck_input.db)&quot;]</div>
+<div class="line">        direction TB</div>
+<div class="line">        T1[(&quot;master_lifestyle \n (Profil, Alter, Pfade)&quot;)]</div>
+<div class="line">        T2[(&quot;master_medications \n (Katalog)&quot;)]</div>
+<div class="line">        T3[(&quot;raw_blood_pressure \n (Rohwerte)&quot;)]</div>
+<div class="line">        T4[(&quot;raw_activity_daily \n (Schritte)&quot;)]</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Warehouse</div>
+<div class="line">    subgraph DWH [&quot;4. Analytics Layer (blutdruck_dwh.db)&quot;]</div>
+<div class="line">        F1[(&quot;Fact: fact_health_metrics \n (mit Surrogate Keys)&quot;)]</div>
+<div class="line">        D1[(&quot;Dim: dim_lifestyle \n (SCD Type 2)&quot;)]</div>
+<div class="line">        D2[(&quot;Dim: dim_medication \n (SCD Type 2)&quot;)]</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Verbindungen</div>
+<div class="line">    CSV_BP &amp; JSON_STEPS &amp; CSV_ACT --&gt; P1</div>
+<div class="line">    P0 --&gt; P1 &amp; P2</div>
+<div class="line">    P1 --&gt; T1 &amp; T2 &amp; T3 &amp; T4</div>
+<div class="line">    T1 &amp; T2 &amp; T3 &amp; T4 --&gt; P2</div>
+<div class="line">    P2 --&gt; F1</div>
+<div class="line">    F1 --- D1 &amp; D2</div>
+<div class="line"> </div>
+<div class="line">    %% Styling</div>
+<div class="line">    classDef file fill:#fffde7,stroke:#fbc02d,stroke-width:2px;</div>
+<div class="line">    classDef db fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;</div>
+<div class="line">    classDef script fill:#f1f8e9,stroke:#558b2f,stroke-width:2px;</div>
+<div class="line"> </div>
+<div class="line">    class CSV_BP,JSON_STEPS,CSV_ACT file;</div>
+<div class="line">    class T1,T2,T3,T4,F1,D1,D2 db;</div>
+<div class="line">    class P1,P2 script;</div>
+</div><!-- fragment --><hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+2. Schichtenarchitektur</h1>
+<p>Die Daten fließen in drei Hauptschichten durch das System:</p>
+<ol type="1">
+<li><b>Raw Layer (Dateisystem)</b>: In Ordnern organisierte CSV- und JSON-Exporte (patient_001, etc.).</li>
+<li><b>Staging Area (Ingestion / SQLite)</b>: <span class="tt">blutdruck_input.db</span>. Rohdaten-Import und Bereitstellung der Stammdaten.</li>
+<li><b>Data Warehouse (Analytics / SQLite)</b>: <span class="tt">blutdruck_dwh.db</span> (Geplant). Optimiertes Star-Schema für Abfragen und Dashboards.</li>
+</ol>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+2. Staging Area (<span class="tt">blutdruck_input.db</span>)</h1>
+<p>Diese Datenbank dient der technischen Übernahme der Rohdaten. Hier findet noch keine Änderung der Granularität statt.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+Stammdaten (Master Data)</h2>
+<ul>
+<li><b><span class="tt">master_medications</span></b>: Globaler Katalog aller verfügbaren Medikamente (Quelle: <span class="tt"><a class="el" href="populate__master__data_8sql.html">database/populate_master_data.sql</a></span>).</li>
+<li><b><span class="tt">master_lifestyle</span></b>: Benutzerprofile (Alter, Raucher-Status, Bewegungstyp). Diese Daten werden beim Ingest-Schritt automatisch aus den jeweiligen <b><span class="tt">user_profile.json</span></b> Dateien der Patienten-Ordner extrahiert.</li>
+<li><b><span class="tt">user_medication_plan</span></b>: Verknüpfung von Patient, Medikament und Einnahmezeitpunkt (Quelle: <span class="tt">user_profile.json</span>).</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+Rohdaten-Tabellen (Raw Area)</h2>
+<ul>
+<li><b><span class="tt">raw_blood_pressure</span></b>: Importierte SVD-Werte (Systolisch, Diastolisch, Puls) mit Zeitstempel.</li>
+<li><b><span class="tt">raw_activity_daily</span></b>: Tägliche Zusammenfassung von Schritten, Gewicht und Aktivitätsminuten.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+3. ETL-Skripte &amp; Logik</h1>
+<p>Die Transformation wird durch Python-Skripte gesteuert:</p>
+<ul>
+<li><b><span class="tt"><a class="el" href="init__db_8py.html">init_db.py</a></span></b>: Initialisiert das Schema und befüllt die Stammdaten aus den SQL-Dateien.</li>
+<li><b><span class="tt"><a class="el" href="load__raw__data_8py.html" title="Ingestions-Skript für Blutdruck- und Aktivitätsdaten.">load_raw_data.py</a></span></b>:<ul>
+<li><b>Metadata-driven</b>: Liest aus <span class="tt">master_lifestyle</span>, welche Patienten-Ordner existieren.</li>
+<li><b>Parsing</b>: Verarbeitet HealthForYou-CSVs (Blutdruck) und Google Fit-CSVs (Smartwatch).</li>
+<li><b>Transformation</b>: Normiert Zeitstempel auf ISO-Format (<span class="tt">YYYY-MM-DD HH:MM:SS</span>).</li>
+</ul>
+</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+4. Zielzustand: Warehouse (DWH)</h1>
+<p>Das geplante Warehouse folgt dem <b>Star-Schema</b>, um komplexe Analysen zu beschleunigen (z.B. "Wie verhält sich der Blutdruck 2 Stunden nach der Tabletteneinnahme bei Bewegung?").</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+Geplante Tabellen:</h2>
+<ul>
+<li><b><span class="tt">fact_health_metrics</span></b>: Die zentrale Tabelle, die Blutdruck, Aktivität und Medikation auf Stunden- oder Tagesebene verknüpft.</li>
+<li><b><span class="tt">dim_patient</span></b>: Patienten-Dimension (Alter, Bewegungstyp).</li>
+<li><b><span class="tt">dim_medication</span></b>: Medikations-Dimension.</li>
+<li><b><span class="tt">dim_time</span></b>: Zeit-Dimension (Attribute wie Wochentag, Tageszeit-Cluster).</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+5. Speicherorte</h1>
+<ul>
+<li>Rohdaten: <span class="tt">data/01_raw/</span></li>
+<li>SQL-Skripte: <span class="tt">database/</span></li>
+<li>Datenbank-Dateien: <span class="tt">database/*.db</span></li>
+<li>Python-ETL: <span class="tt">scripts/</span> </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -2,17 +2,15 @@ import re
 import os
 import base64
 import urllib.request
-import urllib.error
+import zlib
+import shutil
 
 # Konfiguration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-IMAGE_DIR = os.path.join(BASE_DIR, 'Architektur', 'images')
-SEARCH_DIR = os.path.join(BASE_DIR, 'Architektur')
+CENTRAL_IMAGE_DIR = os.path.join(BASE_DIR, 'docs', 'images')
 
-if not os.path.exists(IMAGE_DIR):
-    os.makedirs(IMAGE_DIR)
-
-import zlib
+if not os.path.exists(CENTRAL_IMAGE_DIR):
+    os.makedirs(CENTRAL_IMAGE_DIR)
 
 def generate_mermaid_image(mermaid_code, output_path):
     """Konvertiert Mermaid-Code via Kroki API in ein PNG-Bild."""
@@ -29,7 +27,7 @@ def generate_mermaid_image(mermaid_code, output_path):
                     f.write(response.read())
                 return True
     except Exception as e:
-        print(f"  -> FEHLER: {e}")
+        print(f"  -> FEHLER bei API-Aufruf: {e}")
     return False
 
 def process_file(file_path):
@@ -44,28 +42,36 @@ def process_file(file_path):
     if not matches:
         return
 
+    # Bestimme lokalen Image-Ordner (relativ zur Datei)
+    local_dir = os.path.dirname(file_path)
+    local_image_dir = os.path.join(local_dir, 'images')
+    if not os.path.exists(local_image_dir):
+        os.makedirs(local_image_dir)
+
     new_content = content
     for i, code in enumerate(matches):
         file_basename = os.path.basename(file_path).replace('.md', '')
-        img_name = f"{file_basename}_{i}.png"
-        img_path = os.path.join(IMAGE_DIR, img_name)
+        # Eindeutiger Name für den zentralen Ordner
+        safe_filename = file_basename.replace(' ', '_').lower()
+        img_name = f"{safe_filename}_{i}.png"
         
-        # Falls es sich um die Design_Dokumentation handelt, nutzen wir die festen Namen
-        if "Design_Dokumentation" in file_basename:
-            if "ERM (Business-DB)" in content[:content.find(code)]:
-                img_name = "design_erm_business.png"
-            elif "mER (Star-Schema)" in content[:content.find(code)]:
-                img_name = "design_mer_dwh.png"
-            img_path = os.path.join(IMAGE_DIR, img_name)
-
-        if generate_mermaid_image(code.strip(), img_path):
-            print(f"  -> Bild aktualisiert: {img_name}")
-            # Nur Tag einfügen, wenn kein Bild-Link direkt davor oder danach ist
+        local_img_path = os.path.join(local_image_dir, img_name)
+        central_img_path = os.path.join(CENTRAL_IMAGE_DIR, img_name)
+        
+        if generate_mermaid_image(code.strip(), local_img_path):
+            print(f"  -> Bild generiert (Lokal): {img_name}")
+            
+            # Kopiere in den zentralen Ordner für Doxygen
+            shutil.copy2(local_img_path, central_img_path)
+            print(f"  -> Bild kopiert (Zentral): {img_name}")
+            
+            # Markdown-Link aktualisieren (relativ für lokale Vorschau)
             img_tag = f"![Diagramm](./images/{img_name})"
-            if img_name not in content:
-                # Einfaches Einfügen über dem Block
+            if img_tag not in content:
                 search_str = f"```mermaid\n{code}\n```"
-                new_content = new_content.replace(search_str, img_tag + "\n\n" + search_str)
+                # Falls schon ein Link da ist, ersetzen wir den Block nicht doppelt
+                if f"![Diagramm]" not in content:
+                    new_content = new_content.replace(search_str, img_tag + "\n\n" + search_str)
         else:
             print(f"  -> FEHLER bei Bildgenerierung für {img_name}")
 
@@ -73,11 +79,21 @@ def process_file(file_path):
         f.write(new_content)
 
 def main():
-    # Alle .md Dateien in Architektur (rekursiv)
-    for root, dirs, files in os.walk(SEARCH_DIR):
-        for file in files:
-            if file.endswith('.md'):
-                process_file(os.path.join(root, file))
+    # Suche in Architektur und docs
+    search_paths = [
+        os.path.join(BASE_DIR, 'Architektur'),
+        os.path.join(BASE_DIR, 'docs')
+    ]
+    
+    for start_path in search_paths:
+        if not os.path.exists(start_path): continue
+        for root, dirs, files in os.walk(start_path):
+            # doxygen_output ignorieren
+            if 'doxygen_output' in root: continue
+            
+            for file in files:
+                if file.endswith('.md'):
+                    process_file(os.path.join(root, file))
 
 if __name__ == "__main__":
     main()

@@ -101,6 +101,8 @@ Dazu werden zwei Zeitstempel genutzt:
 *Hier liegen die Quellcodes für die Diagramme, falls du sie später für die Doku anpassen oder in ein anderes Format exportieren willst.*
 
 ### ERM (Business-DB)
+![Diagramm](./images/design_dokumentation_0.png)
+
 ```mermaid
 flowchart TD
     %% Entitäten (Rechtecke)
@@ -166,6 +168,8 @@ flowchart TD
 ```
 
 ### mER (Star-Schema)
+![Diagramm](./images/design_dokumentation_1.png)
+
 ```mermaid
 erDiagram
     fact_health_metrics }o--|| dim_user : who

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Health Monitoring Data Pipeline: Projektidee: Health Monitoring</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Health Monitoring Data Pipeline<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">An end-to-end data engineering project for blood pressure and activity tracking.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Suchen',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md__aufgabenstellung_2_idee.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Projektidee: Health Monitoring </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md66"></a></p>
+<p>Fokus: Blutdruck, Bewegung &amp; Medikamente</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md67"></a>
+Die Idee</h1>
+<p>Ich möchte ein System bauen, das verschiedene Gesundheitsdaten zusammenführt und auswertet. Es geht vor allem um diese Punkte:</p>
+<ul>
+<li>Wie hat sich der Blutdruck entwickelt?</li>
+<li>Wie viel hat sich die Person bewegt (Schritte)?</li>
+<li>Wann wurden welche Medikamente genommen?</li>
+</ul>
+<p>Das Ziel ist es, herauszufinden, wie Bewegung, die Tageszeit und Medikamente den Blutdruck beeinflussen. Außerdem möchte ich schauen, ob man Warnzeichen automatisch erkennen kann – zum Beispiel, wenn der Blutdruck hoch bleibt, obwohl sich die Person kaum bewegt.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md69"></a>
+Anforderungen der Projektarbeit</h1>
+<p>Das Projekt erfüllt die offiziellen Vorgaben:</p>
+<blockquote class="doxtable">
+<p>"Die Daten sollen aus mindestens drei unterschiedlichen Quellen stammen (z. B. CSV, JSON, Excel/XLSX, Datenbanken, REST APIs oder Open Data Portale)." </p>
+</blockquote>
+<blockquote class="doxtable">
+<p>"Die Ergebnisse der OLAP-Analysen werden anschließend in einem Streamlit-Dashboard visualisiert." </p>
+</blockquote>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md71"></a>
+Woher kommen die Daten?</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md72"></a>
+1. Blutdruck-Werte</h2>
+<ul>
+<li>Das sind echte Messwerte von mir, die ich anonymisiert habe.</li>
+<li>Ich exportiere sie als CSV-Datei aus meiner Blutdruck-App.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md73"></a>
+2. Schritte und Aktivität</h2>
+<ul>
+<li>Diese Daten kommen von meiner Smartwatch (über Google Takeout).</li>
+<li>Die Daten liegen als JSON oder CSV vor und sind ebenfalls anonymisiert.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md74"></a>
+3. Medikamente</h2>
+<ul>
+<li>Eine Excel- oder CSV-Liste, in der steht, wann was genommen wurde.</li>
+<li>Wichtige Infos: Welches Medikament, wie viel (mg) und wie spät es bei der Einnahme war.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md75"></a>
+4. Vielleicht später: Wetterdaten</h2>
+<ul>
+<li>Ich könnte über eine API noch Wetterdaten (Temperatur, Luftdruck) abrufen.</li>
+<li>Die Frage ist: Hat das Wetter auch einen Einfluss auf den Blutdruck?</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
+Welche Fragen sollen beantwortet werden? (OLAP-Analyse)</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
+Hilft Bewegung dem Blutdruck?</h2>
+<ul>
+<li>Ich vergleiche den Blutdruck an Tagen mit viel Bewegung mit Tagen, an denen man faul war.</li>
+<li>Gibt es Tageszeiten, an denen der Blutdruck trotz Sport nicht sinkt?</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md79"></a>
+Wie gut wirken die Medikamente?</h2>
+<ul>
+<li>Wie verändert sich der Blutdruck in den ersten Stunden nach der Tablette?</li>
+<li>Wirken unterschiedliche Medikamente auch unterschiedlich stark?</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md80"></a>
+Bewegung und Medikamente zusammen</h2>
+<ul>
+<li>Hilft Sport direkt nach der Tabletteneinnahme dabei, den Blutdruck besser zu senken?</li>
+<li>Gibt es Momente, in denen beides (Sport + Medikamente) nicht ausreicht?</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md81"></a>
+Warnsignale erkennen</h2>
+<ul>
+<li>Wenn sich jemand ungewöhnlich lange gar nicht bewegt, könnte das ein Sturz sein.</li>
+<li>Ein Alarm könnte ausgelöst werden, wenn jemand seine Tabletten vergessen hat, der Blutdruck hoch ist und er sich nicht bewegt.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md83"></a>
+Technik im Hintergrund (ETL &amp; DWH)</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md84"></a>
+1. Daten einsammeln (Extract)</h2>
+<ul>
+<li>CSV- und Excel-Dateien einlesen.</li>
+<li>JSON-Daten von der Smartwatch verarbeiten.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md85"></a>
+2. Daten aufbereiten (Transform)</h2>
+<ul>
+<li>Die Zeiten vereinheitlichen (z. B. alles auf 15-Minuten-Blöcke zusammenfassen).</li>
+<li>Die Daten über die Patienten-ID und die Zeit miteinander verknüpfen.</li>
+<li>Neue Werte berechnen (z. B. "Wie lange ist die letzte Tablette her?").</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md86"></a>
+3. Daten speichern (Load)</h2>
+<ul>
+<li><b>Data Warehouse (Star-Schema)</b>:<ul>
+<li>Eine Haupttabelle für alle Messwerte.</li>
+<li>Zusatztabellen für Details zu Patienten, Zeit, Medikamenten und Aktivitäten.</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
+4. Anzeigen der Ergebnisse (Visualisierung)</h2>
+<ul>
+<li>Eine App mit Streamlit bauen.</li>
+<li>Dort kann man sich Diagramme anschauen und die Daten filtern.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
+Datenschutz</h1>
+<p>Da es um Gesundheitsdaten geht, passe ich besonders auf:</p><ul>
+<li>Ich benutze nur meine eigenen Daten und mache sie komplett anonym.</li>
+<li>Das Projekt ist eine technische Übung und keine echte medizinische Beratung. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>

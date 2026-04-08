@@ -1,8 +1,12 @@
--- ==========================================
--- Schema für das Data Warehouse (DWH)
--- Archiv: blutdruck_dwh.db
--- Fokus: Star-Schema (OLAP) mit SCD Type 2
--- ==========================================
+-- @file dwh_schema.sql
+-- @brief Definition des Star-Schemas für das Data Warehouse.
+--
+-- Dieses Schema beinhaltet die Faktentabelle für Gesundheitsmetriken sowie 
+-- Dimensionstabellen für Nutzer, Medikation (SCD 2) und Lifestyle (SCD 2).
+--
+-- @section Architecture Schichtenmodell
+-- - **Dimensionen**: dim_user, dim_medication, dim_lifestyle, dim_date
+-- - **Fakten**: fact_health_metrics
 
 -- 1. Dimension: Nutzer (Stammdaten)
 CREATE TABLE IF NOT EXISTS dim_user (

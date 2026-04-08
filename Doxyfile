@@ -1,0 +1,39 @@
+# Doxyfile for Health Monitoring Project
+PROJECT_NAME           = "Health Monitoring Data Pipeline"
+PROJECT_NUMBER         = 1.0
+PROJECT_BRIEF          = "An end-to-end data engineering project for blood pressure and activity tracking."
+
+# Input files
+INPUT                  = . scripts/ etl/ dashboard/ database/ docs/
+FILE_PATTERNS          = *.py *.sql *.md
+RECURSIVE              = YES
+USE_MDRV               = YES
+MARKDOWN_SUPPORT       = YES
+
+# Main entry point
+USE_MDRV               = YES
+# Main page should be taken from Mainpage.md
+INPUT                  += docs/Mainpage.md
+IMAGE_PATH             = docs/images/
+USE_MDRV               = YES
+
+# Output
+OUTPUT_DIRECTORY       = docs/doxygen_output
+GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
+
+# Extraction Settings
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+
+# Python specific
+EXTENSION_MAPPING      = py=Python
+OPTIMIZE_OUTPUT_JAVA   = YES
+
+# Graphs (Disabled by default to avoid dependency on Graphviz)
+HAVE_DOT               = NO
+
+# Characters
+OUTPUT_LANGUAGE        = German
+DOXYFILE_ENCODING      = UTF-8

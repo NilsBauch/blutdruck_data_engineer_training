@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Health Monitoring Data Pipeline: Architektur-Übersicht: Health Monitoring Projekt</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Health Monitoring Data Pipeline<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">An end-to-end data engineering project for blood pressure and activity tracking.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Suchen',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md__architektur_2_architektur___uebersicht.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Architektur-Übersicht: Health Monitoring Projekt </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md5"></a></p>
+<p>Das folgende Diagramm zeigt die Gesamtarchitektur des Data Engineering Projekts. Es veranschaulicht den Weg von den Datenquellen über die Extraktion und ETL-Verarbeitung bis hin zur Speicherung und Visualisierung.</p>
+<p>Das Setup basiert auf <b>Python 3</b> als primärer Programmiersprache für den gesamten ETL-Prozess und <b>SQLite3</b> für die persistente Datenhaltung im Data Warehouse.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+Aufbau der Rohdaten (<span class="tt">01_raw</span>)</h2>
+<p>Um mehrere Patienten zu unterstützen, werden die Daten in nutzerspezifischen Unterordnern gespeichert. Eine detaillierte Erläuterung der Verknüpfungslogik finden Sie in der <a href="file:///c:/Users/nilsb/OneDrive/Nils/weiterbildung/DataEngineer/Projektarbeit/Blutdruck/Architektur/Datenquellen_Verknuepfung.md">Datenquellen-Verknüpfung</a>.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+1. Datenquellen und Formate</h1>
+<ol type="1">
+<li><b>HealthForYou App (Blutdruck &amp; Medikation):</b><ul>
+<li><b>Methode:</b> Manueller Datenexport direkt aus der Applikation.</li>
+<li><b>Dateipfad:</b> <span class="tt">data/01_raw/patient_&lt;ID&gt;/csv/HealthForYouApp_DataExport.csv</span></li>
+<li><b>Format:</b> <span class="tt">CSV</span> (SVD-Werte: Systole, Diastole, Puls).</li>
+</ul>
+</li>
+<li><b>Google Fit / Smartwatch (Aktivitäts- &amp; Bewegungsdaten):</b><ul>
+<li><b>Methode:</b> Export aller Fitnessdaten über <b>Google Takeout</b>.</li>
+<li><b>Dateipfad:</b> <span class="tt">data/01_raw/patient_&lt;ID&gt;/json/</span></li>
+<li><b>Formate:</b> <span class="tt">JSON</span> (detaillierte Schritte, Schlaf), <span class="tt">CSV</span> (Tageszusammenfassungen).</li>
+</ul>
+</li>
+<li><b>Stammdaten (Medikation &amp; Lifestyle):</b><ul>
+<li><b>Medikation:</b> Der Medikamenten-Katalog wird über SQL-Dateien (<span class="tt"><a class="el" href="populate__master__data_8sql.html">database/populate_master_data.sql</a></span>) gepflegt.</li>
+<li><b>Lifestyle:</b> Individuelle Patientenprofile (Raucherstatus, Bewegungstyp) werden über die Datei <span class="tt">user_profile.json</span> im Profil-Ordner des Patienten definiert.</li>
+</ul>
+</li>
+</ol>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+2. Architekturdiagramm</h1>
+<p><img src="./images/architektur_uebersicht.png" alt="Architektur Übersicht" class="inline"/></p>
+<div class="image">
+<img src="architektur_uebersicht_0.png" alt=""/>
+<div class="caption">
+Diagramm</div></div>
+    <div class="fragment"><div class="line">flowchart TD</div>
+<div class="line">    %% Quellen</div>
+<div class="line">    subgraph Quellen [&quot;Datenquellen&quot;]</div>
+<div class="line">        A[&quot;Mobile App: HealthForYou&quot;]</div>
+<div class="line">        B[&quot;Smartwatch (via Google Fit)&quot;]</div>
+<div class="line">        M_MED[(&quot;Katalog: Medikation \n (Format: SQL/SQLite)&quot;)]</div>
+<div class="line">        M_LIFE[(&quot;Profil: Lifestyle \n (Format: JSON)&quot;)]</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Export/Rohdaten Layer (Umstrukturiert)</div>
+<div class="line">    subgraph Export [&quot;Staging &amp; Rohdaten (Patienten-Ordner)&quot;]</div>
+<div class="line">        C[(&quot;csv/ \n (Blutdruck-Export)&quot;)]</div>
+<div class="line">        D[(&quot;json/ \n (Smartwatch-Export)&quot;)]</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Pipeline Layer</div>
+<div class="line">    subgraph ETL [&quot;ETL-Orchestrierung (run_pipeline.py)&quot;]</div>
+<div class="line">        E(&quot;1. Data Ingestion (load_raw_data.py)&quot;)</div>
+<div class="line">        F(&quot;2. Inkrementelle Transformation&quot;)</div>
+<div class="line">        G(&quot;3. SCD Type 2 &amp; Historisierung&quot;)</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Storage Layer</div>
+<div class="line">    subgraph Storage [&quot;Data Warehouse&quot;]</div>
+<div class="line">        H[(&quot;SQLite3 Datenbank \n Star Schema (SCD 2)&quot;)]</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Presentation Layer</div>
+<div class="line">    subgraph Analyse [&quot;Business Intelligence&quot;]</div>
+<div class="line">        I([&quot;Interaktives Streamlit Dashboard&quot;])</div>
+<div class="line">    end</div>
+<div class="line"> </div>
+<div class="line">    %% Datenfluss</div>
+<div class="line">    A --&gt;|&quot;CSV-Export&quot;| C</div>
+<div class="line">    B --&gt;|&quot;Google Takeout&quot;| D</div>
+<div class="line">    M_MED &amp; M_LIFE --&gt;|&quot;Tabellen / Parsing&quot;| E</div>
+<div class="line"> </div>
+<div class="line">    C --&gt;|&quot;Import&quot;| E</div>
+<div class="line">    D --&gt;|&quot;Import&quot;| E</div>
+<div class="line"> </div>
+<div class="line">    E --&gt;|&quot;Staging Data&quot;| F</div>
+<div class="line">    F --&gt;|&quot;Deltas&quot;| G</div>
+<div class="line">    G --&gt;|&quot;Fakten &amp; Dimensionen&quot;| H</div>
+<div class="line"> </div>
+<div class="line">    H &lt;--&gt;|&quot;SQL Queries&quot;| I</div>
+<div class="line"> </div>
+<div class="line">    %% Styling</div>
+<div class="line">    classDef source fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;</div>
+<div class="line">    classDef raw fill:#fff3e0,stroke:#e65100,stroke-width:2px;</div>
+<div class="line">    classDef process fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;</div>
+<div class="line">    classDef dwh fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px;</div>
+<div class="line">    classDef dash fill:#ffebee,stroke:#c62828,stroke-width:2px;</div>
+<div class="line"> </div>
+<div class="line">    class A,B,M_MED,M_LIFE source;</div>
+<div class="line">    class C,D raw;</div>
+<div class="line">    class E,F,G process;</div>
+<div class="line">    class H dwh;</div>
+<div class="line">    class I dash;</div>
+</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>

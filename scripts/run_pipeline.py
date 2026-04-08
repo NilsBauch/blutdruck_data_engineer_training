@@ -1,18 +1,15 @@
-"""
-Zentrale Orchestrierung der Health-Data-Pipeline
-------------------------------------------------
-Dieses Skript steuert den gesamten Prozess von der Datenbank-Initialisierung 
-über die Datengenerierung bis hin zur Transformation in das Data Warehouse.
-
-Vorgehensweise:
-1. Initialisierung: Datenbanken werden zurückgesetzt und Stammdaten geladen.
-2. Generierung: Synthetische Patientendaten werden erzeugt.
-3. Loading: Die Rohdaten werden in die Staging-Datenbank geladen.
-4. Transformation: Die Daten werden in das Star-Schema (DWH) überführt.
-
-Autor: Antigravity (AI assistant)
-Datum: 2026-04-08
-"""
+## @file run_pipeline.py
+#  @brief Zentrale Orchestrierung der Health-Data-Pipeline.
+#
+#  Dieses Skript steuert den gesamten Prozess von der Datenbank-Initialisierung 
+#  über die Datengenerierung bis hin zur Transformation in das Data Warehouse.
+#
+#  @section Workflow Vorgehensweise
+#  1. **Initialisierung**: Datenbanken werden zurückgesetzt und Stammdaten geladen.
+#  2. **Loading**: Die Rohdaten werden in die Staging-Datenbank geladen.
+#  3. **Transformation**: Die Daten werden in das Star-Schema (DWH) überführt.
+#
+#  @date 2026-04-08
 
 import os
 import sys

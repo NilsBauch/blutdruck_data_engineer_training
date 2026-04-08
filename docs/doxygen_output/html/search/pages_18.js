@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['scd_202_0',['5. Historie bewahren (SCD 2)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md54',1,'']]],
+  ['schema_1',['mER (Star-Schema)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md59',1,'']]],
+  ['schema_20modell_20mer_2',['Star-Schema Modell (mER)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md49',1,'']]],
+  ['schichtenarchitektur_3',['2. Schichtenarchitektur',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md13',1,'']]],
+  ['schnittstellen_4',['Datenquellen und Schnittstellen',['../md__r_e_a_d_m_e.html#autotoc_md100',1,'']]],
+  ['schritte_20und_20aktivität_5',['2. Schritte und Aktivität',['../md__aufgabenstellung_2_idee.html#autotoc_md73',1,'']]],
+  ['skripte_20logik_6',['3. ETL-Skripte &amp;amp; Logik',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md19',1,'']]],
+  ['sollen_20beantwortet_20werden_20olap_20analyse_7',['Welche Fragen sollen beantwortet werden? (OLAP-Analyse)',['../md__aufgabenstellung_2_idee.html#autotoc_md77',1,'']]],
+  ['später_3a_20wetterdaten_8',['4. Vielleicht später: Wetterdaten',['../md__aufgabenstellung_2_idee.html#autotoc_md75',1,'']]],
+  ['spalten_3a_9',['Technische Spalten:',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md55',1,'']]],
+  ['speichern_20load_10',['3. Daten speichern (Load)',['../md__aufgabenstellung_2_idee.html#autotoc_md86',1,'']]],
+  ['speicherorte_11',['5. Speicherorte',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md24',1,'']]],
+  ['speicherplatz_20kalkulation_12',['Ein Wort zum Speicherplatz (Kalkulation)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md43',1,'']]],
+  ['staging_13',['2. Der Dateneingang (Business-DB / Staging)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md41',1,'']]],
+  ['staging_20area_20blutdruck_5finput_20db_14',['2. Staging Area (&lt;span class=&quot;tt&quot;&gt;blutdruck_input.db&lt;/span&gt;)',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md15',1,'']]],
+  ['stammdaten_20master_20data_15',['Stammdaten (Master Data)',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md16',1,'']]],
+  ['star_20schema_16',['mER (Star-Schema)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md59',1,'']]],
+  ['star_20schema_20modell_20mer_17',['Star-Schema Modell (mER)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md49',1,'']]],
+  ['starten_18',['Aktivitätsdiagramm (Whitebox): UC4 - Dashboard starten',['../md__architektur_2_activity_2activity__diagram__uc4.html',1,'']]],
+  ['starten_3a_19',['Dashboard starten:',['../md__r_e_a_d_m_e.html#autotoc_md117',1,'']]],
+  ['struktur_20',['Datenquellen-Verknüpfung und Struktur',['../md__architektur_2_datenquellen___verknuepfung.html',1,'']]],
+  ['sturz_20und_20gefahrenanalyse_21',['Präventives Monitoring (Sturz- und Gefahrenanalyse)',['../md__r_e_a_d_m_e.html#autotoc_md110',1,'']]],
+  ['svd_20mapping_22',['3. Datenformate und SVD-Mapping',['../md__architektur_2_datenquellen___verknuepfung.html#autotoc_md33',1,'']]],
+  ['systemüberblick_23',['Systemüberblick',['../index.html#autotoc_md90',1,'']]],
+  ['system_20können_20muss_20funktionale_20anforderungen_24',['1. Was das System können muss (Funktionale Anforderungen)',['../md__requirements_2requirements.html#autotoc_md122',1,'']]]
+];

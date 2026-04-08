@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Health Monitoring Data Pipeline: Anforderungen: Blutdruck-Überwachung</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Health Monitoring Data Pipeline<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">An end-to-end data engineering project for blood pressure and activity tracking.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Suchen',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md__requirements_2requirements.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Anforderungen: Blutdruck-Überwachung </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md121"></a></p>
+<p>Dieses Dokument fasst die wesentlichen Systemanforderungen für das Data Engineering Projekt zusammen. Die Einstufung hilft dabei, den Scope der Projektarbeit präzise abzugrenzen.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md122"></a>
+1. Was das System können muss (Funktionale Anforderungen)</h1>
+<ul>
+<li><b>[F-01] Daten einlesen (ETL - Extract):</b> Das Programm muss Daten aus meiner Blutdruck-App (CSV) und von meiner Smartwatch (Google Takeout: JSON und CSV) laden können.</li>
+<li><b>[F-02] Daten aufräumen:</b> Unterschiedliche Schreibweisen (z. B. beim Datum) müssen korrigiert werden, damit alles zusammenpasst.</li>
+<li><b>[F-03] Zeiten anpassen:</b> Da nicht jede Sekunde gemessen wird, werden die Daten in Zeitblöcke (z. B. 15 oder 60 Minuten) zusammengefasst.</li>
+<li><b>[F-04] Daten verknüpfen:</b> Blutdruck, Schritte und Medikamente müssen über die Patienten-Nummer und die Uhrzeit logisch zusammengeführt werden.</li>
+<li><b>[F-05] Neue Werte berechnen:</b> Das System berechnet automatisch wichtige Infos, wie z. B. "Wie viele Schritte wurden vor der Messung gemacht?".</li>
+<li><b>[F-06] Datenbank speichern (DWH):</b> Die fertigen Daten werden in einem sauberen <b>Star-Schema</b> (Haupt- und Detailtabellen) in einer Datenbank gespeichert.</li>
+<li><b>[F-07] Auswertung (Dashboard):</b> Es gibt eine einfache Weboberfläche mit Streamlit, auf der man sich Diagramme anschauen und Filter benutzen kann.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md124"></a>
+2. Nicht-funktionale Anforderungen (Non-Functional Requirements)</h1>
+<p><em>Diese Anforderungen definieren, <b>wie</b> das System aus Architektursicht agieren und beschaffen sein soll.</em></p>
+<ul>
+<li><b>[NF-01] Datenschutz:</b> Wir benutzen nur meine eigenen Daten, die vorher anonymisiert wurden. Es werden keine Daten von anderen Personen verarbeitet.</li>
+<li><b>[NF-02] Baustein-Prinzip:</b> Das System ist so aufgebaut, dass man später leicht neue Datenquellen (z. B. eine neue App) hinzufügen kann, ohne alles umbauen zu müssen.</li>
+<li><b>[NF-03] Automatisierung:</b> Der gesamte Ablauf (ETL) sollte per Knopfdruck oder über ein einziges Skript starten.</li>
+<li><b>[NF-04] Technik:</b> Wir benutzen <b>Python 3</b> und eine kleine, einfache Datenbank (<b>SQLite3</b>). So braucht man keinen extra Server und kann alles direkt auf dem PC starten.</li>
+<li><b>[NF-05] Spätere Erweiterung:</b> Der Aufbau (Star-Schema) soll so flexibel sein, dass man später auch Wetterdaten aus dem Internet hinzufügen könnte. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>

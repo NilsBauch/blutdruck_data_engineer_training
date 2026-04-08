@@ -1,3 +1,11 @@
+## @file load_raw_data.py
+#  @brief Ingestions-Skript für Blutdruck- und Aktivitätsdaten.
+#
+#  Dieses Skript liest Rohdaten aus CSV- und JSON-Quellen ein, bereitet sie auf 
+#  und schreibt sie in die Staging-Datenbank (blutdruck_input.db).
+#
+#  @date 2026-04-08
+
 import csv
 import json
 import sqlite3
@@ -10,6 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_DATA_DIR = os.path.join(BASE_DIR, 'data', '01_raw')
 DB_PATH = os.path.join(BASE_DIR, 'database', 'blutdruck_input.db')
 
+## @brief Stellt eine Verbindung zur Staging-Datenbank her.
+#  @return sqlite3.Connection Objekt.
 def get_db_connection():
     return sqlite3.connect(DB_PATH)
 

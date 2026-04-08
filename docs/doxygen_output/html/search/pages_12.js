@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['mapping_0',['Mapping',['../md__architektur_2_datenquellen___verknuepfung.html#autotoc_md33',1,'3. Datenformate und SVD-Mapping'],['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md51',1,'4. Wie kommen die Daten rüber? (ETL &amp;amp; Mapping)']]],
+  ['mapping_20tabelle_20detailliert_1',['ETL Mapping Tabelle (Detailliert)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md52',1,'']]],
+  ['master_20data_2',['Stammdaten (Master Data)',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md16',1,'']]],
+  ['medikamente_3',['Medikamente',['../md__aufgabenstellung_2_idee.html#autotoc_md74',1,'3. Medikamente'],['../md__aufgabenstellung_2_idee.html#autotoc_md79',1,'Wie gut wirken die Medikamente?']]],
+  ['medikamente_20zusammen_4',['Bewegung und Medikamente zusammen',['../md__aufgabenstellung_2_idee.html#autotoc_md80',1,'']]],
+  ['medikation_5',['Kombinierte Faktoren (Bewegung und Medikation)',['../md__r_e_a_d_m_e.html#autotoc_md109',1,'']]],
+  ['medikation_20auf_20den_20blutdruck_6',['Einfluss der Medikation auf den Blutdruck',['../md__r_e_a_d_m_e.html#autotoc_md108',1,'']]],
+  ['medikationshistorie_7',['3. Medikationshistorie',['../md__r_e_a_d_m_e.html#autotoc_md103',1,'']]],
+  ['menschen_8',['Projektidee: Health Monitoring für ältere Menschen',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['mer_9',['Star-Schema Modell (mER)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md49',1,'']]],
+  ['mer_20star_20schema_10',['mER (Star-Schema)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md59',1,'']]],
+  ['mermaid_11',['Anhang: Technische Modelle (Mermaid)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md57',1,'']]],
+  ['modell_20mer_12',['Star-Schema Modell (mER)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md49',1,'']]],
+  ['modelle_20mermaid_13',['Anhang: Technische Modelle (Mermaid)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md57',1,'']]],
+  ['monitoring_14',['Projektidee: Health Monitoring',['../md__aufgabenstellung_2_idee.html',1,'']]],
+  ['monitoring_20blutdruck_20aktivität_15',['Use-Case-Diagramm: Health Monitoring (Blutdruck &amp;amp; Aktivität)',['../md__architektur_2_use_case_2use__case__diagram.html',1,'']]],
+  ['monitoring_20data_20pipeline_16',['Zentrale Dokumentation: Health Monitoring Data Pipeline',['../index.html',1,'']]],
+  ['monitoring_20für_20ältere_20menschen_17',['Projektidee: Health Monitoring für ältere Menschen',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['monitoring_20plattform_18',['Design-Dokumentation: Health Monitoring Plattform',['../md__architektur_2_design_2_design___dokumentation.html',1,'']]],
+  ['monitoring_20projekt_19',['Architektur-Übersicht: Health Monitoring Projekt',['../md__architektur_2_architektur___uebersicht.html',1,'']]],
+  ['monitoring_20sturz_20und_20gefahrenanalyse_20',['Präventives Monitoring (Sturz- und Gefahrenanalyse)',['../md__r_e_a_d_m_e.html#autotoc_md110',1,'']]],
+  ['multi_20user_20konzept_21',['1. Verzeichnisstruktur (Multi-User-Konzept)',['../md__architektur_2_datenquellen___verknuepfung.html#autotoc_md26',1,'']]],
+  ['muss_20funktionale_20anforderungen_22',['1. Was das System können muss (Funktionale Anforderungen)',['../md__requirements_2requirements.html#autotoc_md122',1,'']]]
+];

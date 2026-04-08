@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Health Monitoring Data Pipeline: Projektidee: Health Monitoring für ältere Menschen</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Health Monitoring Data Pipeline<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">An end-to-end data engineering project for blood pressure and activity tracking.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Erzeugt von Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Suchen',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md__r_e_a_d_m_e.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Lade ...</div>
+<div class="SRStatus" id="Searching">Suche ...</div>
+<div class="SRStatus" id="NoMatches">Keine Treffer</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Projektidee: Health Monitoring für ältere Menschen </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md95"></a></p>
+<p>Fokus: Blutdruck, Bewegung &amp; Medikation</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md96"></a>
+Kernidee</h1>
+<p>Ein End-to-End-System zur Datenanalyse für Hypertonie-Patienten, das folgende Datenpunkte zusammenführt:</p>
+<ul>
+<li>Blutdruckverläufe</li>
+<li>Bewegungsprofil und körperliche Aktivität (Schritte, Inaktivitätsphasen)</li>
+<li>Medikationsplan (Bedarfs- und Dauermedikation wie Blutdrucksenker)</li>
+</ul>
+<p>Ziel der Arbeit ist es, zu analysieren, wie sich der Blutdruck in Abhängigkeit von Bewegung, Tageszeit und Medikamentengabe entwickelt. Darüber hinaus soll untersucht werden, ob sich Risikomuster – wie beispielsweise dauerhaft hoher Blutdruck bei langanhaltender Inaktivität – automatisiert erkennen lassen.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md98"></a>
+Formale Anforderungen der Projektarbeit</h1>
+<p>Das Konzept adressiert direkt die vorgegebenen Projektanforderungen:</p>
+<blockquote class="doxtable">
+<p>"Die Daten sollen aus mindestens drei unterschiedlichen Quellen stammen (z. B. CSV, JSON, Excel/XLSX, Datenbanken, REST APIs oder Open Data Portale)." </p>
+</blockquote>
+<blockquote class="doxtable">
+<p>"Die Ergebnisse der OLAP-Analysen werden anschließend in einem Streamlit-Dashboard visualisiert." </p>
+</blockquote>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md100"></a>
+Datenquellen und Schnittstellen</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md101"></a>
+1. Kardiovaskuläre Daten (Blutdruck)</h2>
+<ul>
+<li>Bereitgestellt als CSV- oder Excel-Export aus Blutdruckmessgeräten oder Gesundheits-Apps.</li>
+<li>Für die Entwicklung: Einsatz von generierten, synthetischen Datenstrukturen, die realistische Messwerte simulieren.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md102"></a>
+2. Bewegungs- und Aktivitätsdaten</h2>
+<ul>
+<li>Nutzung von Wearable- oder Smartphone-Metriken (Aktivitätsminuten, Schrittzahl) im JSON-/CSV-Format.</li>
+<li>Alternativ: Anbindung eines öffentlichen Open-Data-Sets.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md103"></a>
+3. Medikationshistorie</h2>
+<ul>
+<li>Excel- oder CSV-Tabellen zur Dokumentation der Verabreichung.</li>
+<li>Notwendige Attribute:<ul>
+<li>Patient-ID</li>
+<li>Medikamentenpräparat</li>
+<li>Dosierung (mg)</li>
+<li>Einnahmezeitpunkt</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md104"></a>
+4. Optionale Erweiterung: Wetterdaten</h2>
+<ul>
+<li>Externe REST-API zur Abfrage von Außentemperatur und Luftdruck zum Messzeitpunkt.</li>
+<li>Hypothese: Es bestehen messbare Korrelationen zwischen saisonalen oder wetterbedingten Einflüssen und dem Blutdruck.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md106"></a>
+Geplante OLAP-Analysen und Fragestellungen</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md107"></a>
+Einfluss der Bewegung auf den Blutdruck</h2>
+<ul>
+<li>Signifikanzanalyse des durchschnittlichen Blutdrucks an Tagen mit hoher vs. niedriger Aktivität.</li>
+<li>Identifikation spezifischer Tageszeiten mit unzureichend sinkendem Blutdruck trotz körperlicher Betätigung.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md108"></a>
+Einfluss der Medikation auf den Blutdruck</h2>
+<ul>
+<li>Zeitverlaufsanalyse des Blutdrucks in den ersten Stunden nach Verabreichung eines Wirkstoffs.</li>
+<li>Vergleich der durchschnittlichen Senkungseffekte unterschiedlicher Medikamentenklassen.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md109"></a>
+Kombinierte Faktoren (Bewegung und Medikation)</h2>
+<ul>
+<li>Untersucht, ob sportliche Aktivität im Anschluss an eine Medikamenteneinnahme synergetische Effekte auf die Blutdrucksenkung hat.</li>
+<li>Identifikation einer Risikogruppe: Patienten, bei denen trotz Medikation kombiniert mit Bewegung der Blutdruck anhaltend zu hoch ist.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md110"></a>
+Präventives Monitoring (Sturz- und Gefahrenanalyse)</h2>
+<ul>
+<li>Auswertung außergewöhnlich langer Inaktivitätsphasen als Indikator für mögliche Stürze oder gesundheitliche Vorfälle.</li>
+<li>Alarmierungslogik bei Kombination aus hoher Inaktivität, verpasster Medikation und messbar erhöhtem Blutdruck.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md112"></a>
+Grobe technische Architektur (ETL &amp; DWH)</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md113"></a>
+1. Extract</h2>
+<ul>
+<li>Flat-File-Lader (CSV/Excel) für strukturierte Gesundheits- und Medikationsdaten.</li>
+<li>JSON-Verarbeitung für hierarchische Wearable-Daten.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md114"></a>
+2. Transform</h2>
+<ul>
+<li>Harmonisierung der Zeitzonen und -achsen (Aggregation auf standardisierte Intervalle, z.B. 15 Minuten).</li>
+<li>Relationales Mapping der Daten über die <span class="tt">Patient-ID</span> und den Erfassungszeitraum.</li>
+<li>Feature Engineering zur Ableitung neuer Kennzahlen ("Gesamtschritte im 2-h-Intervall", "Vergangene Zeit seit letzter Dosis").</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md115"></a>
+3. Load</h2>
+<ul>
+<li><b>Data Warehouse Ansatz (Star-Schema)</b>:<ul>
+<li>Faktentabelle für alle gemessenen Vitalwerte und Aktivitäten.</li>
+<li>Dimensionen für Patienten, Zeit, Medikamente und Aktivitäten.</li>
+</ul>
+</li>
+<li><b>Data Marts</b>: Abgeleitete Tabellen für spezifische Dashboard-Ansichten ("Blutdruck x Bewegung").</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md116"></a>
+4. Visualisierung &amp; Analyse</h2>
+<p>Die Ergebnisse werden in einem interaktiven Streamlit-Dashboard präsentiert.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md117"></a>
+Dashboard starten:</h2>
+<div class="fragment"><div class="line">streamlit run dashboard/app.py</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md118"></a>
+Beantwortete Forschungsfragen:</h2>
+<ol type="1">
+<li><b>Medikations-Check</b>: Vergleich der Blutdruckwerte vor vs. nach der Einnahme.</li>
+<li><b>Aktivitäts-Korrelation</b>: Zusammenhang zwischen täglicher Schrittzahl und Ruhepuls.</li>
+<li><b>Stress-Analyse</b>: Auswertung von Werktagen vs. Wochenenden.</li>
+<li><b>SCD 2 Historie</b>: Visualisierung der Blutdruck-Entwicklung über verschiedene Lifestyle-Phasen hinweg.</li>
+</ol>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md120"></a>
+Datenschutz und Ethik</h1>
+<p>Da Gesundheitsdaten besonders sensibel sind (gemäß DSGVO Art. 9), gelten für dieses Projekt strikte Vorgaben:</p><ul>
+<li>Es werden ausschließlich rein synthetische Daten genutzt.</li>
+<li>Die Arbeit versteht sich als technische Machbarkeitsstudie für eine Datenpipeline, nicht als Basis für medizinische Diagnosen der realen Welt. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Erzeugt von <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -82,9 +82,19 @@ Das Konzept adressiert direkt die vorgegebenen Projektanforderungen:
   - Dimensionen für Patienten, Zeit, Medikamente und Aktivitäten.
 - **Data Marts**: Abgeleitete Tabellen für spezifische Dashboard-Ansichten ("Blutdruck x Bewegung").
 
-### 4. Visualisierung
-- Entwicklung einer analytischen Streamlit-Applikation.
-- Interaktive Zeitreihenanalyse, Pivotierungsmöglichkeiten und aggregierte KPIs zur schnellen Triage.
+### 4. Visualisierung & Analyse
+Die Ergebnisse werden in einem interaktiven Streamlit-Dashboard präsentiert.
+
+### Dashboard starten:
+```bash
+streamlit run dashboard/app.py
+```
+
+### Beantwortete Forschungsfragen:
+1. **Medikations-Check**: Vergleich der Blutdruckwerte vor vs. nach der Einnahme.
+2. **Aktivitäts-Korrelation**: Zusammenhang zwischen täglicher Schrittzahl und Ruhepuls.
+3. **Stress-Analyse**: Auswertung von Werktagen vs. Wochenenden.
+4. **SCD 2 Historie**: Visualisierung der Blutdruck-Entwicklung über verschiedene Lifestyle-Phasen hinweg.
 
 ---
 

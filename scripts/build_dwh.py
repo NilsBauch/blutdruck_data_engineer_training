@@ -1,3 +1,12 @@
+## @file build_dwh.py
+#  @brief Transformations-Skript für das Data Warehouse (Star-Schema).
+#
+#  Dieses Skript überführt die Daten aus der Staging-Datenbank in das 
+#  analytische Star-Schema. Es implementiert eine **SCD Type 2 Historisierung** 
+#  für Dimensionen und eine inkrementelle Beladung der Faktentabelle.
+#
+#  @date 2026-04-08
+
 import sqlite3
 import os
 from datetime import datetime, timedelta
@@ -8,15 +17,20 @@ INPUT_DB = os.path.join(BASE_DIR, 'database', 'blutdruck_input.db')
 DWH_DB = os.path.join(BASE_DIR, 'database', 'blutdruck_dwh.db')
 SCHEMA_SQL = os.path.join(BASE_DIR, 'database', 'dwh_schema.sql')
 
+## @brief Initialisiert das DWH-Schema, falls es noch nicht existiert.
 def init_dwh():
     print("Initialisiere DWH Schema (IF NOT EXISTS)...")
-    # Wir löschen die DB NICHT mehr, um Inkrementalität zu ermöglichen
     
     conn = sqlite3.connect(DWH_DB)
     with open(SCHEMA_SQL, 'r', encoding='utf-8') as f:
         conn.executescript(f.read())
     conn.close()
 
+## @brief Migriert Patienten-, Medikations- und Zeitdaten in die Dimensionstabellen.
+#  
+#  Verwendet für Medikation und Lifestyle eine **SCD Type 2** Logik:
+#  - Falls sich ein Attribut ändert, wird der alte Datensatz geschlossen (SCD_valid_to = JETZT).
+#  - Ein neuer Datensatz mit dem neuen Wert wird geöffnet (SCD_valid_to = 9999-12-31).
 def migrate_dimensions():
     print("Migriere Dimensionen (SCD Type 2)...")
     in_conn = sqlite3.connect(INPUT_DB)

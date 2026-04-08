@@ -6,6 +6,8 @@ Diese Dokumentation beschreibt die Schichtenarchitektur der Blutdruck-Monitoring
 
 ![Datenfluss Übersicht](../images/datenbank_uebersicht.png)
 
+![Diagramm](./images/datenbank_uebersicht_0.png)
+
 ```mermaid
 flowchart TD
     %% Datenquellen
