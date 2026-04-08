@@ -28,7 +28,7 @@ Um mehrere Patienten zu unterstützen, werden die Daten in nutzerspezifischen Un
 
 ![Architektur Übersicht](./images/architektur_uebersicht.png)
 
-![Diagramm](./images/architektur_uebersicht_0.png)
+![Diagramm](images/architektur_uebersicht_0.png)
 
 ```mermaid
 flowchart TD

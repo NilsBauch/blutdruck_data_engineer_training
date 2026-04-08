@@ -42,20 +42,24 @@ def process_file(file_path):
     if not matches:
         return
 
-    # Bestimme lokalen Image-Ordner (relativ zur Datei)
+    # Bestimme lokalen Image-Ordner (IMMER Unterordner 'images' der aktuellen Datei)
     local_dir = os.path.dirname(file_path)
-    local_image_dir = os.path.join(local_dir, 'images')
-    if not os.path.exists(local_image_dir):
-        os.makedirs(local_image_dir)
+    local_image_target_dir = os.path.join(local_dir, 'images')
+    if not os.path.exists(local_image_target_dir):
+        os.makedirs(local_image_target_dir)
 
     new_content = content
+    # Wir entfernen zuerst alle alten, möglicherweise kaputten Bild-Links, die das Skript vorher eingefügt hat
+    new_content = re.sub(r'!\[Diagramm\]\(.*?\)\n\n', '', new_content)
+    # Entferne auch spezifische Architektur-Links, die wir vorher falsch gesetzt haben
+    new_content = re.sub(r'!\[Aktivitätsdiagramm.*?\]\(.*?\)\n\n', '', new_content)
+
     for i, code in enumerate(matches):
         file_basename = os.path.basename(file_path).replace('.md', '')
-        # Eindeutiger Name für den zentralen Ordner
         safe_filename = file_basename.replace(' ', '_').lower()
         img_name = f"{safe_filename}_{i}.png"
         
-        local_img_path = os.path.join(local_image_dir, img_name)
+        local_img_path = os.path.join(local_image_target_dir, img_name)
         central_img_path = os.path.join(CENTRAL_IMAGE_DIR, img_name)
         
         if generate_mermaid_image(code.strip(), local_img_path):
@@ -63,15 +67,11 @@ def process_file(file_path):
             
             # Kopiere in den zentralen Ordner für Doxygen
             shutil.copy2(local_img_path, central_img_path)
-            print(f"  -> Bild kopiert (Zentral): {img_name}")
             
-            # Markdown-Link aktualisieren (relativ für lokale Vorschau)
-            img_tag = f"![Diagramm](./images/{img_name})"
-            if img_tag not in content:
-                search_str = f"```mermaid\n{code}\n```"
-                # Falls schon ein Link da ist, ersetzen wir den Block nicht doppelt
-                if f"![Diagramm]" not in content:
-                    new_content = new_content.replace(search_str, img_tag + "\n\n" + search_str)
+            # Link setzen: images/filename.png (Funktioniert lokal in VS Code und in Doxygen via IMAGE_PATH)
+            img_tag = f"![Diagramm](images/{img_name})"
+            search_str = f"```mermaid\n{code}\n```"
+            new_content = new_content.replace(search_str, img_tag + "\n\n" + search_str)
         else:
             print(f"  -> FEHLER bei Bildgenerierung für {img_name}")
 
@@ -79,7 +79,6 @@ def process_file(file_path):
         f.write(new_content)
 
 def main():
-    # Suche in Architektur und docs
     search_paths = [
         os.path.join(BASE_DIR, 'Architektur'),
         os.path.join(BASE_DIR, 'docs')
@@ -88,8 +87,8 @@ def main():
     for start_path in search_paths:
         if not os.path.exists(start_path): continue
         for root, dirs, files in os.walk(start_path):
-            # doxygen_output ignorieren
             if 'doxygen_output' in root: continue
+            if 'images' in dirs: dirs.remove('images') # Nicht in images-Ordnern suchen
             
             for file in files:
                 if file.endswith('.md'):

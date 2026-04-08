@@ -12,7 +12,7 @@ var searchData=
   ['spalten_3a_9',['Technische Spalten:',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md55',1,'']]],
   ['speichern_20load_10',['3. Daten speichern (Load)',['../md__aufgabenstellung_2_idee.html#autotoc_md86',1,'']]],
   ['speicherorte_11',['5. Speicherorte',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md24',1,'']]],
-  ['speicherplatz_20kalkulation_12',['Ein Wort zum Speicherplatz (Kalkulation)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md43',1,'']]],
+  ['speicherplatz_20kalkulation_12',['Speicherplatz (Kalkulation)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md43',1,'']]],
   ['staging_13',['2. Der Dateneingang (Business-DB / Staging)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md41',1,'']]],
   ['staging_20area_20blutdruck_5finput_20db_14',['2. Staging Area (&lt;span class=&quot;tt&quot;&gt;blutdruck_input.db&lt;/span&gt;)',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md15',1,'']]],
   ['stammdaten_20master_20data_15',['Stammdaten (Master Data)',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md16',1,'']]],

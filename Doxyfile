@@ -14,7 +14,7 @@ MARKDOWN_SUPPORT       = YES
 USE_MDRV               = YES
 # Main page should be taken from Mainpage.md
 INPUT                  += docs/Mainpage.md
-IMAGE_PATH             = docs/images/
+IMAGE_PATH             = docs/
 USE_MDRV               = YES
 
 # Output

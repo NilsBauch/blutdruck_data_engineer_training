@@ -65,7 +65,7 @@ var NAVTREE =
       ] ],
       [ "2. Der Dateneingang (Business-DB / Staging)", "md__architektur_2_design_2_design___dokumentation.html#autotoc_md41", [
         [ "Datenquellen (Übersicht)", "md__architektur_2_design_2_design___dokumentation.html#autotoc_md42", null ],
-        [ "Ein Wort zum Speicherplatz (Kalkulation)", "md__architektur_2_design_2_design___dokumentation.html#autotoc_md43", null ],
+        [ "Speicherplatz (Kalkulation)", "md__architektur_2_design_2_design___dokumentation.html#autotoc_md43", null ],
         [ "Datenbank-Design (Normalform)", "md__architektur_2_design_2_design___dokumentation.html#autotoc_md44", null ],
         [ "Datenmodell (ERM)", "md__architektur_2_design_2_design___dokumentation.html#autotoc_md45", null ]
       ] ],

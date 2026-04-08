@@ -12,7 +12,7 @@ Dieses Modell beschreibt die funktionalen Hauptanwendungsfälle des Data-Enginee
 
 ![Use-Case Diagramm](../images/use_case_diagram.png)
 
-![Diagramm](../images/use_case_diagram_0.png)
+![Diagramm](images/use_case_diagram_0.png)
 
 ```mermaid
 flowchart LR

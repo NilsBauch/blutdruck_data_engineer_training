@@ -2,7 +2,7 @@
 
 Hier wird die reaktive Schleife gezeigt, die abläuft, wenn der Benutzer im laufenden Dashboard mit Filtern oder Grafiken interagiert.
 
-![Diagramm](../images/activity_diagram_uc5_0.png)
+![Diagramm](images/activity_diagram_uc5_0.png)
 
 ```mermaid
 flowchart TD

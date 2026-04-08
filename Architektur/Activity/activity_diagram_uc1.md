@@ -2,9 +2,7 @@
 
 Dieses Diagramm modelliert den ersten Use-Case und zeigt im Whitebox-Stil, wie der Benutzer oder das Sensorensystem (z.B. Health App) die Daten in das Dateisystem des Data-Engineering-Projekts einspielt.
 
-![Aktivitätsdiagramm UC1](../images/activity_diagram_uc1.png)
-
-![Diagramm](../images/activity_diagram_uc1_0.png)
+![Diagramm](images/activity_diagram_uc1_0.png)
 
 ```mermaid
 flowchart TD

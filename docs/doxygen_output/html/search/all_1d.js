@@ -18,6 +18,5 @@ var searchData=
   ['wie_20kommen_20die_20daten_20rüber_20etl_20mapping_15',['4. Wie kommen die Daten rüber? (ETL &amp;amp; Mapping)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md51',1,'']]],
   ['wirken_20die_20medikamente_16',['Wie gut wirken die Medikamente?',['../md__aufgabenstellung_2_idee.html#autotoc_md79',1,'']]],
   ['woher_20kommen_20die_20daten_17',['Woher kommen die Daten?',['../md__aufgabenstellung_2_idee.html#autotoc_md71',1,'']]],
-  ['workflow_20ausführen_18',['Aktivitätsdiagramm (Whitebox): UC2 - ETL-Workflow ausführen',['../md__architektur_2_activity_2activity__diagram__uc2.html',1,'']]],
-  ['wort_20zum_20speicherplatz_20kalkulation_19',['Ein Wort zum Speicherplatz (Kalkulation)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md43',1,'']]]
+  ['workflow_20ausführen_18',['Aktivitätsdiagramm (Whitebox): UC2 - ETL-Workflow ausführen',['../md__architektur_2_activity_2activity__diagram__uc2.html',1,'']]]
 ];

@@ -2,7 +2,7 @@
 
 Dieses Diagramm verdeutlicht die Architektur beim Starten der analytischen Oberfläche. Es repräsentiert die Initialisierung der Streamlit-Webanwendung und die erste Datenbereitstellung.
 
-![Diagramm](../images/activity_diagram_uc4_0.png)
+![Diagramm](images/activity_diagram_uc4_0.png)
 
 ```mermaid
 flowchart TD

@@ -25,7 +25,7 @@ Die `blutdruck_input.db` dient als Zwischenlager (Staging). Hier fließen die Da
 2.  **Aktivität (CSV/JSON):** Rohdaten-Abzug der Smartwatch (Google Takeout).
 3.  **Nutzerprofil & Plan (JSON):** Eine dedizierte Steuerdatei (`user_profile.json`), die das Profil und die Medikation verwaltet.
 
-### Ein Wort zum Speicherplatz (Kalkulation)
+### Speicherplatz (Kalkulation)
 In einer Hochrechnung für **100 Leute über 5 Jahre** ergeben sich folgende Werte:
 *   **Blutdruck**: 2 Messungen pro Tag = 365.000 Zeilen (ca. 22 MB).
 *   **Aktivität**: 1 Eintrag pro Tag = 182.500 Zeilen (ca. 7 MB).
@@ -101,7 +101,7 @@ Dazu werden zwei Zeitstempel genutzt:
 *Hier liegen die Quellcodes für die Diagramme, falls du sie später für die Doku anpassen oder in ein anderes Format exportieren willst.*
 
 ### ERM (Business-DB)
-![Diagramm](./images/design_dokumentation_0.png)
+![Diagramm](images/design_dokumentation_0.png)
 
 ```mermaid
 flowchart TD
@@ -168,7 +168,7 @@ flowchart TD
 ```
 
 ### mER (Star-Schema)
-![Diagramm](./images/design_dokumentation_1.png)
+![Diagramm](images/design_dokumentation_1.png)
 
 ```mermaid
 erDiagram

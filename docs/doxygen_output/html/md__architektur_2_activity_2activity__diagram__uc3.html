@@ -94,9 +94,11 @@ $(function(){initNavTree('md__architektur_2_activity_2activity__diagram__uc3.htm
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md2"></a></p>
 <p>Dieses Diagramm zeigt im Detail, was innerhalb des in UC2 ausgelösten Sub-Prozesses beim Transformieren und Laden passiert, insbesondere die Interaktion zwischen Pandas und der SQLite-Datenbank.</p>
-<p><img src="../images/activity_diagram_uc3.png" alt="Aktivitätsdiagramm UC3" class="inline"/></p>
-<p><img src="../images/activity_diagram_uc3_0.png" alt="Diagramm" class="inline"/></p>
-<div class="fragment"><div class="line">flowchart TD</div>
+<div class="image">
+<img src="activity_diagram_uc3_0.png" alt=""/>
+<div class="caption">
+Diagramm</div></div>
+    <div class="fragment"><div class="line">flowchart TD</div>
 <div class="line">    %% Startpunkt des Includes</div>
 <div class="line">    Start((&quot;Beginn UC3&quot;)) --&gt; P1</div>
 <div class="line"> </div>
@@ -129,10 +131,7 @@ $(function(){initNavTree('md__architektur_2_activity_2activity__diagram__uc3.htm
 <div class="line">    S1 --&gt; S2</div>
 <div class="line">    S2 --&gt; S3</div>
 <div class="line">    S3 --&gt; S4</div>
-<div class="line">    S4 --&gt; S5</div>
 <div class="line">    S5 --&gt; End((&quot;Ende / Rückgabe an UC2&quot;))</div>
-<div class="line">    </div>
-<div class="line">    S8 --&gt; End((&quot;Ende / Rückgabe an UC2&quot;))</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

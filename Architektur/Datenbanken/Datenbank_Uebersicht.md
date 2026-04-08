@@ -6,47 +6,54 @@ Diese Dokumentation beschreibt die Schichtenarchitektur der Blutdruck-Monitoring
 
 ![Datenfluss Übersicht](../images/datenbank_uebersicht.png)
 
-![Diagramm](./images/datenbank_uebersicht_0.png)
+![Diagramm](images/datenbank_uebersicht_0.png)
 
 ```mermaid
 flowchart TD
     %% Datenquellen
     subgraph Quellen ["1. Rohdaten (Filesystem)"]
         direction LR
-        CSV_BP["Blutdruck-App \n (HealthForYouApp_DataExport.csv)"]
-        JSON_STEPS["Smartwatch-Schritte \n (Google Fit .json)"]
-        CSV_ACT["Smartwatch-Aktivität \n (Tägliche_Aktivität.csv)"]
+        CSV_BP["Blutdruck-App \n (CSV)"]
+        JSON_ACT["Smartwatch \n (JSON/CSV)"]
+        USR_JSON["Nutzerprofil & Plan \n (user_profile.json)"]
     end
 
     %% ETL Prozess
-    subgraph ETL ["2. ETL-Orchestrierung (Python)"]
+    subgraph ETL ["2. ETL-Prozess & Initialisierung"]
         P0["run_pipeline.py \n (Master Script)"]
-        P1["load_raw_data.py \n (Extract & Load)"]
-        P2["build_dwh.py \n (Transform)"]
+        P1["init_db.py \n (Schema & SQL-Masterdata)"]
+        P2["load_raw_data.py \n (Extract & Load)"]
+        P3["build_dwh.py \n (Transform/SCD 2)"]
     end
 
     %% Staging Area
     subgraph Staging ["3. Staging Area (blutdruck_input.db)"]
         direction TB
-        T1[("master_lifestyle \n (Profil, Alter, Pfade)")]
-        T2[("master_medications \n (Katalog)")]
-        T3[("raw_blood_pressure \n (Rohwerte)")]
-        T4[("raw_activity_daily \n (Schritte)")]
+        T1[("master_lifestyle \n (aus JSON)")]
+        T2[("master_medications \n (aus SQL-Katalog)")]
+        T5[("user_medication_plan \n (aus JSON)")]
+        T3[("raw_blood_pressure \n (aus CSV)")]
+        T4[("raw_activity_daily \n (aus JSON/CSV)")]
     end
 
     %% Warehouse
     subgraph DWH ["4. Analytics Layer (blutdruck_dwh.db)"]
-        F1[("Fact: fact_health_metrics \n (mit Surrogate Keys)")]
-        D1[("Dim: dim_lifestyle \n (SCD Type 2)")]
-        D2[("Dim: dim_medication \n (SCD Type 2)")]
+        F1[("Fact: fact_health_metrics")]
+        D1[("Dim: dim_lifestyle (SCD 2)")]
+        D2[("Dim: dim_medication (SCD 2)")]
     end
 
     %% Verbindungen
-    CSV_BP & JSON_STEPS & CSV_ACT --> P1
-    P0 --> P1 & P2
-    P1 --> T1 & T2 & T3 & T4
-    T1 & T2 & T3 & T4 --> P2
-    P2 --> F1
+    USR_JSON --> P2 & P1
+    CSV_BP & JSON_ACT --> P2
+    
+    P0 --> P1 & P2 & P3
+    
+    P1 --> T2
+    P2 --> T1 & T3 & T4 & T5
+    
+    T1 & T2 & T3 & T4 & T5 --> P3
+    P3 --> F1
     F1 --- D1 & D2
 
     %% Styling
@@ -54,9 +61,9 @@ flowchart TD
     classDef db fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
     classDef script fill:#f1f8e9,stroke:#558b2f,stroke-width:2px;
 
-    class CSV_BP,JSON_STEPS,CSV_ACT file;
-    class T1,T2,T3,T4,F1,D1,D2 db;
-    class P1,P2 script;
+    class CSV_BP,JSON_ACT,USR_JSON file;
+    class T1,T2,T3,T4,T5,F1,D1,D2 db;
+    class P1,P2,P3 script;
 ```
 
 ---

@@ -2,9 +2,7 @@
 
 Dieses Diagramm zeigt den Start und die Ablauflogik des ETL-Hauptskripts. Da Use-Case 3 zwingend inkludiert ist, wird er hier als Sub-Prozess (Referenz) dargestellt.
 
-![Aktivitätsdiagramm UC2](../images/activity_diagram_uc2.png)
-
-![Diagramm](../images/activity_diagram_uc2_0.png)
+![Diagramm](images/activity_diagram_uc2_0.png)
 
 ```mermaid
 flowchart TD
@@ -28,8 +26,5 @@ flowchart TD
     P3 --> P4
     P4 --> P5
     P5 --> End(("Ende"))
-    
-    P7 --> End(("Ende"))
-    P8 --> End
 ```
 

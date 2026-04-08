@@ -2,9 +2,7 @@
 
 Dieses Diagramm zeigt im Detail, was innerhalb des in UC2 ausgelösten Sub-Prozesses beim Transformieren und Laden passiert, insbesondere die Interaktion zwischen Pandas und der SQLite-Datenbank.
 
-![Aktivitätsdiagramm UC3](../images/activity_diagram_uc3.png)
-
-![Diagramm](../images/activity_diagram_uc3_0.png)
+![Diagramm](images/activity_diagram_uc3_0.png)
 
 ```mermaid
 flowchart TD
@@ -40,9 +38,6 @@ flowchart TD
     S1 --> S2
     S2 --> S3
     S3 --> S4
-    S4 --> S5
     S5 --> End(("Ende / Rückgabe an UC2"))
-    
-    S8 --> End(("Ende / Rückgabe an UC2"))
 ```
 
