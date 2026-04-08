@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS dim_medication (
     dosage_mg REAL,
     category TEXT,
     SCD_valid_from DATE DEFAULT '2000-01-01',
-    SCD_valid_to DATE -- NULL = aktuell
+    SCD_valid_to DATE DEFAULT '9999-12-31' -- aktuellster Datensatz
 );
 
 -- 3. Dimension: Lifestyle
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS dim_lifestyle (
     is_smoker BOOLEAN,
     movement_type TEXT, -- 'wenig', 'mittel', 'sportlich'
     SCD_valid_from DATE DEFAULT '2000-01-01',
-    SCD_valid_to DATE -- NULL = aktuell
+    SCD_valid_to DATE DEFAULT '9999-12-31' -- aktuellster Datensatz
 );
 
 -- 4. Dimension: Zeit/Datum
