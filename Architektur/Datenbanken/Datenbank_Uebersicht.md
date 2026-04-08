@@ -74,9 +74,9 @@ Die Daten fließen in drei Hauptschichten durch das System:
 Diese Datenbank dient der technischen Übernahme der Rohdaten. Hier findet noch keine Änderung der Granularität statt.
 
 ### Stammdaten (Master Data)
-*   **`master_medications`**: Katalog aller verfügbaren Medikamente (Name, Dosis in mg).
-*   **`master_lifestyle`**: Benutzerprofile (Alter, Raucher-Status, Bewegungstyp) sowie das dynamische Folder-Mapping (`raw_data_folder`).
-*   **`user_medication_plan`**: Verknüpfung von Patient, Medikament und Einnahmezeitpunkt (morgens, abends, etc.).
+*   **`master_medications`**: Globaler Katalog aller verfügbaren Medikamente (Quelle: `database/populate_master_data.sql`).
+*   **`master_lifestyle`**: Benutzerprofile (Alter, Raucher-Status, Bewegungstyp). Diese Daten werden beim Ingest-Schritt automatisch aus den jeweiligen **`user_profile.json`** Dateien der Patienten-Ordner extrahiert.
+*   **`user_medication_plan`**: Verknüpfung von Patient, Medikament und Einnahmezeitpunkt (Quelle: `user_profile.json`).
 
 ### Rohdaten-Tabellen (Raw Area)
 *   **`raw_blood_pressure`**: Importierte SVD-Werte (Systolisch, Diastolisch, Puls) mit Zeitstempel.

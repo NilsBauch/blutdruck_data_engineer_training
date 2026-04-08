@@ -18,9 +18,9 @@ Um mehrere Patienten zu unterstützen, werden die Daten in nutzerspezifischen Un
     *   **Methode:** Export aller Fitnessdaten über **Google Takeout**.
     *   **Dateipfad:** `data/01_raw/patient_<ID>/json/`
     *   **Formate:** `JSON` (detaillierte Schritte, Schlaf), `CSV` (Tageszusammenfassungen).
-3.  **Master Data / Stammdaten (Medikation & Lifestyle):**
-    *   **Methode:** Direkte Pflege und Bereitstellung über eine SQLite-Datenbank.
-    *   **Format:** `SQLite3`. Enthält den Medikamenten-Katalog und benutzerspezifische Profile (Raucher status, Sport-Intensität).
+3.  **Stammdaten (Medikation & Lifestyle):**
+    *   **Medikation:** Der Medikamenten-Katalog wird über SQL-Dateien (`database/populate_master_data.sql`) gepflegt.
+    *   **Lifestyle:** Individuelle Patientenprofile (Raucherstatus, Bewegungstyp) werden über die Datei `user_profile.json` im Profil-Ordner des Patienten definiert.
 
 ---
 
@@ -34,7 +34,8 @@ flowchart TD
     subgraph Quellen ["Datenquellen"]
         A["Mobile App: HealthForYou"]
         B["Smartwatch (via Google Fit)"]
-        M[("Stammdaten: Medikation & Lifestyle \n (Format: SQLite3)")]
+        M_MED[("Katalog: Medikation \n (Format: SQL/SQLite)")]
+        M_LIFE[("Profil: Lifestyle \n (Format: JSON)")]
     end
 
     %% Export/Rohdaten Layer (Umstrukturiert)
@@ -63,7 +64,7 @@ flowchart TD
     %% Datenfluss
     A -->|"CSV-Export"| C
     B -->|"Google Takeout"| D
-    M -->|"Tabellen"| E
+    M_MED & M_LIFE -->|"Tabellen / Parsing"| E
 
     C -->|"Import"| E
     D -->|"Import"| E
@@ -81,7 +82,7 @@ flowchart TD
     classDef dwh fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px;
     classDef dash fill:#ffebee,stroke:#c62828,stroke-width:2px;
 
-    class A,B,M source;
+    class A,B,M_MED,M_LIFE source;
     class C,D raw;
     class E,F,G process;
     class H dwh;
