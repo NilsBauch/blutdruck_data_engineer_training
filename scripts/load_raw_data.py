@@ -172,30 +172,31 @@ def load_user_profile(user_id, patient_folder):
 def main():
     print(f"=== ETL-PROZESS START ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')}) ===")
     
+    # Nutzer durch Scannen des Dateisystems ermitteln (Robustere Discovery)
+    users_to_process = []
+    if os.path.exists(RAW_DATA_DIR):
+        for item in os.listdir(RAW_DATA_DIR):
+            item_path = os.path.join(RAW_DATA_DIR, item)
+            if os.path.isdir(item_path) and item.startswith('patient_'):
+                try:
+                    user_id = int(item.split('_')[1])
+                    users_to_process.append((user_id, item))
+                except (ValueError, IndexError):
+                    continue
+    
+    if not users_to_process:
+        print("Keine Patienten-Ordner in data/01_raw gefunden.")
+        return
+
+    print(f"Gefundene Patienten: {[u[1] for u in users_to_process]}")
+    
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Nutzer aus master_lifestyle abrufen (oder Initialisierung sicherstellen)
-    try:
-        cursor.execute("SELECT user_id, name, raw_data_folder FROM master_lifestyle")
-        users = cursor.fetchall()
-    except sqlite3.Error as e:
-        print(f"Fehler beim Abrufen der Nutzer-Metadaten: {e}")
-        conn.close()
-        return
-
-    if not users:
-        print("Keine Nutzer in master_lifestyle gefunden. Starte Initialisierung für ID 1...")
-        users = [(1, 'Patient 001', 'patient_001')]
-    
-    for user_id, name, raw_folder in users:
-        if not raw_folder:
-            print(f"Skipping User {user_id} ({name}): Kein raw_data_folder hinterlegt.")
-            continue
-            
-        print(f"\n--- Verarbeite Nutzer: {name} (ID: {user_id}, Ordner: {raw_folder}) ---")
+    for user_id, raw_folder in users_to_process:
+        print(f"\n--- Verarbeite Nutzer ID {user_id} (Ordner: {raw_folder}) ---")
         
-        # 0. Nutzerprofil & Medikationsplan aus JSON (NEU)
+        # 0. Nutzerprofil & Medikationsplan aus JSON
         load_user_profile(user_id, raw_folder)
 
         # Staging: Messdaten für diesen Nutzer zurücksetzen (Rohdaten-Tabellen)
