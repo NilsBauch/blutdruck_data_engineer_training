@@ -38,21 +38,21 @@ flowchart TD
     end
 
     %% Export/Rohdaten Layer (Umstrukturiert)
-    subgraph Export ["Staging & Rohdaten (patient_001)"]
+    subgraph Export ["Staging & Rohdaten (Patienten-Ordner)"]
         C[("csv/ \n (Blutdruck-Export)")]
         D[("json/ \n (Smartwatch-Export)")]
     end
 
     %% Pipeline Layer
-    subgraph ETL ["ETL-Datenpipeline (Python 3)"]
-        E("1. Data Ingestion/Extraction")
-        F("2. Transformation & Bereinigung")
-        G("3. Feature Engineering & Harmonisierung")
+    subgraph ETL ["ETL-Orchestrierung (run_pipeline.py)"]
+        E("1. Data Ingestion (load_raw_data.py)")
+        F("2. Inkrementelle Transformation")
+        G("3. SCD Type 2 & Historisierung")
     end
 
     %% Storage Layer
     subgraph Storage ["Data Warehouse"]
-        H[("SQLite3 Datenbank \n Star Schema: Fakten & Dimensionen")]
+        H[("SQLite3 Datenbank \n Star Schema (SCD 2)")]
     end
 
     %% Presentation Layer
@@ -61,18 +61,18 @@ flowchart TD
     end
 
     %% Datenfluss
-    A -->|"CSV-Export generieren"| C
-    B -->|"Google Takeout anfordern"| D
-    M -->|"Tabellen einlesen"| E
+    A -->|"CSV-Export"| C
+    B -->|"Google Takeout"| D
+    M -->|"Tabellen"| E
 
-    C -->|"Liest CSV in Pandas/Polars"| E
-    D -->|"Liest JSON/CSV in Pandas/Polars"| E
+    C -->|"Import"| E
+    D -->|"Import"| E
 
-    E -->|"Rohdaten-DataFrames"| F
-    F -->|"Typisierte, bereinigte Daten"| G
-    G -->|"Aggregierte Intervalle & Metriken"| H
+    E -->|"Staging Data"| F
+    F -->|"Deltas"| G
+    G -->|"Fakten & Dimensionen"| H
 
-    H <-->|"SQL Query (z. B. via SQLAlchemy)"| I
+    H <-->|"SQL Queries"| I
 
     %% Styling
     classDef source fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;

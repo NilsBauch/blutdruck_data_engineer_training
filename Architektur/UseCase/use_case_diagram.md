@@ -55,9 +55,9 @@ flowchart LR
 
 | Use-Case | Kurzbeschreibung |
 | :--- | :--- |
-| **Datenexporte ablegen** | Die Rohdaten (CSV/JSON) werden durch den Akteur oder das Sensorsystem periodisch in der definierten Ablagestruktur generiert und bereitgestellt. |
-| **ETL-Workflow ausführen** | Der Anwender startet (manuell oder zeitgesteuert) das Master-Skript der Datenpipeline. |
-| **Daten transformieren & integrieren** | Innerhalb des Workflows reinigt das System automatisch die Zeitleisten, reichert die Features an und schreibt die aggregierten Fakten ins DWH (Star-Schema). *Die Ausführung des ETL-Workflows inkludiert diesen Schritt zwingend (`<<includes>>`).* |
+| **Datenexporte ablegen** | Die Rohdaten (CSV/JSON) werden periodisch in der Patienten-Ordnerstruktur bereitgestellt. |
+| **ETL-Workflow ausführen** | Der Anwender startet das zentrale Orchestrierungsskript `scripts/run_pipeline.py`, das den gesamten Ingestions- und Transformationsprozess steuert. |
+| **Daten transformieren & integrieren** | Das System reinigt die Daten und integriert sie **historisiert (SCD Type 2)** in das DWH. Dabei werden Änderungen an Attributen (z. B. Lifestyle) erfasst, ohne alte Daten zu überschreiben. |
 | **Dashboard starten** | Der Anwender ruft die Streamlit-Webanwendung auf, die sich direkt mit dem lokalen Data Warehouse verbindet. |
 | **Analysen filtern & explorieren** | Der Anwender justiert Betrachtungszeiträume, filtert nach Metriken (z. B. "nur hohe Inaktivität") und analysiert die grafischen Korrelationen zwischen Medikamenten, Blutdruck und Bewegung. |
 

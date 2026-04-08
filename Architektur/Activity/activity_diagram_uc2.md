@@ -10,29 +10,24 @@ Dieses Diagramm zeigt den Start und die Ablauflogik des ETL-Hauptskripts. Da Use
 flowchart TD
     %% Swimlanes definieren
     subgraph User ["Data Engineer / Scheduler"]
-        Start(("Start")) --> A1["ETL-Skript manuell oder per Job triggern (z.B. python main_etl.py)"]
+        Start(("Start")) --> A1["Orchestrierung triggern (python scripts/run_pipeline.py)"]
     end
 
-    subgraph Python ["Python Laufzeitumgebung (ETL-Master)"]
-        P1["Skript initialisiert Logging und Parameter"]
-        P2["Nach neuen Dateien im Raw-Ordner scannen"]
-        P3{"Dateien gefunden?"}
-        P4["Daten aus CSV/JSON in Pandas einlesen"]
-        P5[["Sub-Prozess: UC3 Transformation & DWH-Load"]]
-        P6["Rohdaten in /data/archive/ verschieben / taggen"]
-        P7["Logging: ETL-Lauf erfolgreich abgeschlossen"]
-        P8["Logging: Keine neuen Daten, Abbruch"]
+    subgraph Python ["Python Runtime (Orchestrator)"]
+        P1["1. Initialisierung (DB-Schemata IF NOT EXISTS)"]
+        P2["2. Ingestion (load_raw_data.py)"]
+        P3["3. Transformation (build_dwh.py)"]
+        P4[["Sub-Prozess: UC3 Transformation & DWH-Load"]]
+        P5["Logging: Status & Metriken prüfen"]
     end
 
     %% Verknüpfungen
     A1 --> P1
     P1 --> P2
     P2 --> P3
-    P3 -- Ja (Rohdaten vorhanden) --> P4
+    P3 --> P4
     P4 --> P5
-    P5 --> P6
-    P6 --> P7
-    P3 -- Nein --> P8
+    P5 --> End(("Ende"))
     
     P7 --> End(("Ende"))
     P8 --> End

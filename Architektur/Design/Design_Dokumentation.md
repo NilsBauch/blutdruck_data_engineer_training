@@ -65,17 +65,20 @@ Ein Python-Skript (`build_dwh.py`) liest den Eingang aus, berechnet den **Pulsdr
 | `raw_blood_pressure`| `sys - dia` | `fact_health_metrics` | `pulse_pressure` | Berechnung des Pulsdrucks |
 | `raw_blood_pressure`| `timestamp` | `fact_health_metrics` | `date_key` | Konvertierung zu YYYYMMDD (FK) |
 | `raw_blood_pressure`| `timestamp` | `fact_health_metrics` | `time_key` | Extraktion der Uhrzeit (HH:MM) |
+| - | - | `fact_health_metrics` | **`med_key`** | Verknüpfung über aktuellen Surrogate Key |
+| - | - | `fact_health_metrics` | **`lifestyle_key`** | Verknüpfung über aktuellen Surrogate Key |
 | `raw_activity_daily`| `steps` | `fact_health_metrics` | `steps_hourly` | Zuordnung zum Tag der Messung |
 | `raw_activity_daily`| `weight_kg` | `fact_health_metrics` | `weight_kg` | Direkte Übernahme |
 | `raw_activity_daily`| `activity_minutes`| `fact_health_metrics` | `activity_minutes` | Direkte Übernahme |
 | `master_lifestyle` | `movement_type` | `dim_lifestyle` | `movement_type` | Übernahme Aktivitätsstatus |
 | `master_lifestyle` | `is_smoker` | `dim_lifestyle` | `is_smoker` | Übernahme Raucherstatus |
-| `master_lifestyle` | `user_id` | `dim_user` | `user_id` | PK-Migration |
+| `master_lifestyle` | `user_id` | `dim_user` | `user_id` | Migration Business Key |
 | `master_lifestyle` | `age` | `dim_user` | `age` | Direkte Übernahme |
-| `master_lifestyle` | `gender` | `dim_user` | `gender` | Übernahme (m/w/d) als `varchar(1)` |
-| `user_medication_plan`| `time_of_day` | `fact_health_metrics` | `is_post_medication` | `True`, falls Messung innerhalb 4h nach Einnahme (morgens=8h, mittags=13h, abends=19h, nachts=23h) |
-| `master_medications`| `med_id` | `dim_medication` | `med_id` | PK-Migration |
+| `master_lifestyle` | `gender` | `dim_user` | `gender` | Übernahme (m/w/d) |
+| `user_medication_plan`| `time_of_day` | `fact_health_metrics` | `is_post_medication` | `True`, falls Messung innerhalb 4h nach Einnahme |
+| `master_medications`| `med_id` | `dim_medication` | `med_id` | Migration Business Key |
 | `master_medications`| `name`, `dose_mg` | `dim_medication` | `name`, `dosage_mg` | Stammdaten-Migration |
+| - | - | `fact_health_metrics` | `load_timestamp` | Technischer Zeitstamp beim Import |
 
 ---
 
@@ -89,7 +92,7 @@ Das ist ein wichtiger Punkt im Data Engineering: Was passiert, wenn ein Patient 
 ### Technische Spalten:
 Dazu werden zwei Zeitstempel genutzt:
 *   `SCD_valid_from`: Ab wann gilt dieser Zustand?
-*   `SCD_valid_to`: Bis wann galt dieser Zustand? (NULL = aktuell gültig).
+*   `SCD_valid_to`: Bis wann galt dieser Zustand? (**9999-12-31** = aktuell gültig).
 
 ---
 
@@ -175,8 +178,8 @@ erDiagram
         int user_id FK
         int date_key FK
         string time_key
-        int med_id FK
-        int lifestyle_id FK
+        int med_key FK
+        int lifestyle_key FK
         int systolic
         int diastolic
         int pulse
@@ -185,6 +188,7 @@ erDiagram
         int activity_minutes
         boolean is_post_medication
         int pulse_pressure
+        datetime load_timestamp
     }
     dim_user {
         int user_id PK
@@ -201,7 +205,8 @@ erDiagram
         boolean is_weekend
     }
     dim_medication {
-        int med_id PK
+        int med_key PK
+        int med_id
         string name
         float dosage_mg
         string category
@@ -209,7 +214,8 @@ erDiagram
         date SCD_valid_to
     }
     dim_lifestyle {
-        int lifestyle_id PK
+        int lifestyle_key PK
+        int user_id
         boolean is_smoker
         string movement_type
         date SCD_valid_from

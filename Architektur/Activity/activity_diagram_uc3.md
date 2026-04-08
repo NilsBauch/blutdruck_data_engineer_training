@@ -11,42 +11,37 @@ flowchart TD
     %% Startpunkt des Includes
     Start(("Beginn UC3")) --> P1
 
-    subgraph Python ["Python (Pandas Transformation)"]
-        P1["Rohdaten (DataFrames) annehmen"]
-        P2["Datums- und Zeitstempel normalisieren"]
-        P3["Fehlende Werte (Null/NaN) interpolieren oder droppen"]
-        P4["Fakten aggregieren (z.B. Durchschnitt pro Tag)"]
-        P5["Dimensionstabellen (Zeit, Patient) aktualisieren"]
+    subgraph Python ["Python (SCD & Fact Transformation)"]
+        P1["Rohdaten aus Staging laden"]
+        P2["Dimensions-Check: Existiert Business Key im DWH?"]
+        P3{"Änderung erkannt?"}
+        P4["SCD 2: Alte Version schließen (SCD_valid_to = now)"]
+        P5["SCD 2: Neue Version öffnen (SCD_valid_to = 9999)"]
+        P6["Inkrementelle Fakten-Vorbereitung (Lookup Keys)"]
     end
 
     subgraph SQLite ["SQLite Data Warehouse"]
-        S1["Verbindung zur DB aufbauen (SQLAlchemy)"]
-        S2["Transaktion starten (BEGIN)"]
-        S3["Dimensionstabellen einfügen (INSERT OR IGNORE)"]
-        S4["Faktentabelle schreiben (INSERT)"]
-        S5{"Fehler beim Laden?"}
-        S6["Transaktion bestätigen (COMMIT)"]
-        S7["Transaktion verwerfen (ROLLBACK)"]
-        S8["Verbindung schließen"]
+        S1["Verbindung zur DWH-DB aufbauen"]
+        S2["SCD-Updates & Inserts ausführen"]
+        S3["Fakten mit UNIQUE-Constraint laden (INSERT OR IGNORE)"]
+        S4["Transaktion abschließen (COMMIT)"]
+        S5["Verbindung schließen"]
     end
 
     %% Verknüpfungen
     P1 --> P2
     P2 --> P3
-    P3 --> P4
+    P3 -- Ja --> P4
     P4 --> P5
+    P5 --> P6
+    P3 -- Nein --> P6
     
-    P5 --> S1
+    P6 --> S1
     S1 --> S2
     S2 --> S3
     S3 --> S4
     S4 --> S5
-    
-    S5 -- Nein --> S6
-    S6 --> S8
-    
-    S5 -- Ja (z.B. Constraint Violation) --> S7
-    S7 --> S8
+    S5 --> End(("Ende / Rückgabe an UC2"))
     
     S8 --> End(("Ende / Rückgabe an UC2"))
 ```

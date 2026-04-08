@@ -17,38 +17,34 @@ flowchart TD
     end
 
     %% ETL Prozess
-    subgraph ETL ["2. ETL-Prozess (Python)"]
-        P1["load_raw_data.py \n (Metadata-driven)"]
-        P2["init_db.py \n (Schema setup)"]
+    subgraph ETL ["2. ETL-Orchestrierung (Python)"]
+        P0["run_pipeline.py \n (Master Script)"]
+        P1["load_raw_data.py \n (Extract & Load)"]
+        P2["build_dwh.py \n (Transform)"]
     end
 
     %% Staging Area
     subgraph Staging ["3. Staging Area (blutdruck_input.db)"]
         direction TB
         T1[("master_lifestyle \n (Profil, Alter, Pfade)")]
-        T2[("master_medications \n (Medikamenten-Katalog)")]
-        T3[("raw_blood_pressure \n (SVD-Werte)")]
-        T4[("raw_activity_daily \n (Schritte, Gewicht)")]
+        T2[("master_medications \n (Katalog)")]
+        T3[("raw_blood_pressure \n (Rohwerte)")]
+        T4[("raw_activity_daily \n (Schritte)")]
     end
 
     %% Warehouse
     subgraph DWH ["4. Analytics Layer (blutdruck_dwh.db)"]
-        F1[("Fact: fact_health_metrics")]
-        D1[("Dim: dim_patient")]
-        D2[("Dim: dim_medication")]
+        F1[("Fact: fact_health_metrics \n (mit Surrogate Keys)")]
+        D1[("Dim: dim_lifestyle \n (SCD Type 2)")]
+        D2[("Dim: dim_medication \n (SCD Type 2)")]
     end
 
     %% Verbindungen
-    CSV_BP -->|"CSV Parsing"| P1
-    JSON_STEPS -->|"JSON Mapping"| P1
-    CSV_ACT -->|"CSV Aggregation"| P1
-
-    P1 -->|"Insert / Overwrite"| T3
-    P1 -->|"Insert / Overwrite"| T4
-    P2 -->|"Initialize"| T1
-    P2 -->|"Populate"| T2
-
-    T3 & T4 & T1 & T2 -.->|"Transform & Aggregat (Sprint 2)"| F1
+    CSV_BP & JSON_STEPS & CSV_ACT --> P1
+    P0 --> P1 & P2
+    P1 --> T1 & T2 & T3 & T4
+    T1 & T2 & T3 & T4 --> P2
+    P2 --> F1
     F1 --- D1 & D2
 
     %% Styling
