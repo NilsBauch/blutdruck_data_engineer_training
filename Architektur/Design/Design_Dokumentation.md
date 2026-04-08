@@ -18,7 +18,12 @@ Das Ziel ist die Untersuchung von Blutdruck, Puls und Bewegung in Verbindung mit
 
 ## 2. Der Dateneingang (Business-DB / Staging)
 
-Die `blutdruck_input.db` dient als Zwischenlager. Hier fließen die CSV-Exporte der App und die JSON-Files der Smartwatch zusammen.
+Die `blutdruck_input.db` dient als Zwischenlager (Staging). Hier fließen die Daten aus drei unterschiedlichen Quellen zusammen.
+
+### Datenquellen (Übersicht)
+1.  **Blutdruck (CSV):** Direkter Export aus der Smartphone-App.
+2.  **Aktivität (CSV/JSON):** Rohdaten-Abzug der Smartwatch (Google Takeout).
+3.  **Nutzerprofil & Plan (JSON):** Eine dedizierte Steuerdatei (`user_profile.json`), die das Profil und die Medikation verwaltet.
 
 ### Ein Wort zum Speicherplatz (Kalkulation)
 In einer Hochrechnung für **100 Leute über 5 Jahre** ergeben sich folgende Werte:
