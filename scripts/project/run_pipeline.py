@@ -17,8 +17,8 @@ import subprocess
 import time
 
 # Pfade zu den Unterordnern definieren (relativ zu diesem Skript)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCRIPTS_DIR = os.path.join(BASE_DIR, "scripts")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SCRIPTS_DIR = os.path.join(BASE_DIR, "scripts", "project")
 ETL_DIR = os.path.join(BASE_DIR, "etl")
 
 # Liste der Skripte in der richtigen Reihenfolge

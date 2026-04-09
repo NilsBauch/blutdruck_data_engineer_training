@@ -1,3 +1,11 @@
+# ==============================================================================
+# SCRIPT: migrate_mermaid_to_images.py
+# BESCHREIBUNG: Sucht in allen Markdown-Dateien nach Mermaid-Diagrammen und 
+#               konvertiert diese via Kroki-API in PNG-Bilder.
+# AUFRUF: py scripts/utils/migrate_mermaid_to_images.py
+# ERGEBNIS: PNG-Bilder in lokalen 'images/'-Ordnern und unter 'docs/images/'.
+# ==============================================================================
+
 import re
 import os
 import base64
@@ -5,8 +13,8 @@ import urllib.request
 import zlib
 import shutil
 
-# Konfiguration
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# --- KONFIGURATION & PFADE ---
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 CENTRAL_IMAGE_DIR = os.path.join(BASE_DIR, 'docs', 'images')
 
 if not os.path.exists(CENTRAL_IMAGE_DIR):

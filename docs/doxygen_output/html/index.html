@@ -106,11 +106,11 @@ Systemüberblick</h1>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md92"></a>
 2. Der ETL-Prozess</h2>
-<p>Der Prozess wird zentral über das Skript <span class="tt"><a class="el" href="run__pipeline_8py.html" title="Zentrale Orchestrierung der Health-Data-Pipeline.">scripts/run_pipeline.py</a></span> gesteuert.</p>
+<p>Der Prozess wird zentral über das Skript <span class="tt"><a class="el" href="run__pipeline_8py.html" title="Zentrale Orchestrierung der Health-Data-Pipeline.">scripts/project/run_pipeline.py</a></span> gesteuert.</p>
 <ul>
-<li><b>Initialisierung</b>: Vorbereitung der Datenbank-Strukturen (<span class="tt"><a class="el" href="init__db_8py.html">scripts/init_db.py</a></span>).</li>
-<li><b>Ingestion</b>: Laden der Rohdaten in die Staging-Area (<span class="tt"><a class="el" href="load__raw__data_8py.html" title="Ingestions-Skript für Blutdruck- und Aktivitätsdaten.">scripts/load_raw_data.py</a></span>).</li>
-<li><b>Transformation</b>: Historisierung nach SCD Type 2 und Überführung ins Star-Schema (<span class="tt"><a class="el" href="build__dwh_8py.html" title="Transformations-Skript für das Data Warehouse (Star-Schema).">scripts/build_dwh.py</a></span>).</li>
+<li><b>Initialisierung</b>: Vorbereitung der Datenbank-Strukturen (<span class="tt"><a class="el" href="init__db_8py.html">scripts/project/init_db.py</a></span>).</li>
+<li><b>Ingestion</b>: Laden der Rohdaten in die Staging-Area (<span class="tt"><a class="el" href="load__raw__data_8py.html" title="Ingestions-Skript für Blutdruck- und Aktivitätsdaten.">scripts/project/load_raw_data.py</a></span>).</li>
+<li><b>Transformation</b>: Historisierung nach SCD Type 2 und Überführung ins Star-Schema (<span class="tt"><a class="el" href="build__dwh_8py.html" title="Transformations-Skript für das Data Warehouse (Star-Schema).">scripts/project/build_dwh.py</a></span>).</li>
 </ul>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md93"></a>
 Programmablauf (High-Level)</h1>

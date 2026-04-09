@@ -12,11 +12,11 @@ Die Pipeline folgt dem klassischen **ETL-Muster** (Extract, Transform, Load) und
 - **Master Data**: JSON-basierte Nutzerprofile und SQL-basierte Medikamentenkataloge.
 
 ### 2. Der ETL-Prozess
-Der Prozess wird zentral über das Skript `scripts/run_pipeline.py` gesteuert.
+Der Prozess wird zentral über das Skript `scripts/project/run_pipeline.py` gesteuert.
 
-- **Initialisierung**: Vorbereitung der Datenbank-Strukturen (`scripts/init_db.py`).
-- **Ingestion**: Laden der Rohdaten in die Staging-Area (`scripts/load_raw_data.py`).
-- **Transformation**: Historisierung nach SCD Type 2 und Überführung ins Star-Schema (`scripts/build_dwh.py`).
+- **Initialisierung**: Vorbereitung der Datenbank-Strukturen (`scripts/project/init_db.py`).
+- **Ingestion**: Laden der Rohdaten in die Staging-Area (`scripts/project/load_raw_data.py`).
+- **Transformation**: Historisierung nach SCD Type 2 und Überführung ins Star-Schema (`scripts/project/build_dwh.py`).
 
 ## Programmablauf (High-Level)
 

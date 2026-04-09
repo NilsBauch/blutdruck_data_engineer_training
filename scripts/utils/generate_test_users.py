@@ -1,11 +1,20 @@
+# ==============================================================================
+# SCRIPT: generate_test_users.py
+# BESCHREIBUNG: Generiert realistische, anonymisierte Patienten-Testdaten.
+#               Simulation von Blutdruck (mit Peak-Effekt), Medikation & Sport.
+# AUFRUF: py scripts/utils/generate_test_users.py
+# ERGEBNIS: Ordnerstruktur unter 'data/01_raw/' pro Patient mit CSVs und JSONs.
+# ==============================================================================
+
 import csv
 import json
 import random
+import shutil
 from datetime import datetime, timedelta
 import os
 
-# Pfade definieren
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# --- KONFIGURATION & PFADE ---
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW_DATA_DIR = os.path.join(BASE_DIR, 'data', '01_raw')
 
 # Patienten-Liste

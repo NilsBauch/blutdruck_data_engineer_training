@@ -1,8 +1,17 @@
+## @file init_db.py
+#  @brief Initialisiert die Datenbankstrukturen für die Ingestion.
+#
+#  Dieses Skript erstellt die SQLite-Datenbank für den Staging-Bereich, 
+#  definiert das Eingabe-Schema und lädt die notwendigen Stammdaten 
+#  (wie Medikamentenkataloge) aus SQL-Skripten.
+#
+#  @date 2026-04-09
+
 import sqlite3
 import os
 
 # Pfade definieren
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DB_PATH = os.path.join(BASE_DIR, 'database', 'blutdruck_input.db')
 SCHEMA_PATH = os.path.join(BASE_DIR, 'database', 'input_schema.sql')
 SEED_PATH = os.path.join(BASE_DIR, 'database', 'populate_master_data.sql')

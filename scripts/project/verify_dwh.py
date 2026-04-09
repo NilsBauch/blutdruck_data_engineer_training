@@ -1,9 +1,22 @@
+## @file verify_dwh.py
+#  @brief Verifiziert den Inhalt und die Integrität des Data Warehouse.
+#
+#  Dieses Skript dient der Qualitätssicherung nach der Transformation. 
+#  Es führt Join-Abfragen über Fakten- und Dimensionstabellen durch und 
+#  gibt eine Stichprobe sowie die Gesamtanzahl der Datensätze aus.
+#
+#  @date 2026-04-09
+
 import sqlite3
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DWH_DB = os.path.join(BASE_DIR, 'database', 'blutdruck_dwh.db')
 
+## @brief Führt eine Testabfrage auf dem DWH aus und prüft die Zeilenanzahl.
+#  
+#  Gibt die ersten 5 Datensätze mit Zeit, Blutdruckwerten, Wochentag, 
+#  Medikationsstatus und berechneten Metriken (Pulse Pressure) aus.
 def verify():
     if not os.path.exists(DWH_DB):
         print(f"Fehler: {DWH_DB} nicht gefunden.")

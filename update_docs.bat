@@ -5,7 +5,7 @@ echo ============================================================
 echo.
 
 echo [1/2] Diagramme generieren und synchronisieren...
-py scripts/refresh_docs.py
+py scripts/utils/refresh_docs.py
 
 echo.
 echo [2/2] Doxygen Dokumentation generieren...

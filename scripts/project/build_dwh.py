@@ -12,7 +12,7 @@ import os
 from datetime import datetime, timedelta
 
 # Pfade
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 INPUT_DB = os.path.join(BASE_DIR, 'database', 'blutdruck_input.db')
 DWH_DB = os.path.join(BASE_DIR, 'database', 'blutdruck_dwh.db')
 SCHEMA_SQL = os.path.join(BASE_DIR, 'database', 'dwh_schema.sql')

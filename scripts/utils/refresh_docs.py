@@ -1,11 +1,19 @@
+# ==============================================================================
+# SCRIPT: refresh_docs.py
+# BESCHREIBUNG: Zentrales Orchestrierungs-Skript für die Dokumentation.
+#               Ruft die Bildmigration auf und bereitet alles für Doxygen vor.
+# AUFRUF: py scripts/utils/refresh_docs.py (oder via update_docs.bat)
+# ERGEBNIS: Aktualisierte Diagramm-Bilder und Vorbereitung für Doxygen.
+# ==============================================================================
+
 import os
 import sys
 import subprocess
 import time
 
-# Pfade
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCRIPTS_DIR = os.path.join(BASE_DIR, 'scripts')
+# --- KONFIGURATION & PFADE ---
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SCRIPTS_DIR = os.path.join(BASE_DIR, 'scripts', 'utils')
 MIGRATE_SCRIPT = os.path.join(SCRIPTS_DIR, 'migrate_mermaid_to_images.py')
 
 def main():

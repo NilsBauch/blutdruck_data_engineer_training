@@ -1,3 +1,12 @@
+# ==============================================================================
+# SCRIPT: update_design_docx.py
+# BESCHREIBUNG: Master-Update für die Design-Dokumentation. Extrahiert Diagramme,
+#               lädt aktuelle PNGs herunter und generiert das Word-Dokument.
+# AUFRUF: py scripts/utils/update_design_docx.py
+# VORAUSSETZUNG: Bibliothek 'python-docx', Internet (für Kroki-API)
+# ERGEBNIS: Aktualisierte Bilder und aktuelles DOCX im Design-Ordner.
+# ==============================================================================
+
 import os
 import re
 import zlib
@@ -5,11 +14,11 @@ import base64
 import urllib.request
 import subprocess
 
-# Pfade
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# --- KONFIGURATION & PFADE ---
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MD_FILE = os.path.join(BASE_DIR, 'Architektur', 'Design', 'Design_Dokumentation.md')
 IMAGE_DIR = os.path.join(BASE_DIR, 'Architektur', 'images')
-MD_TO_DOCX_SCRIPT = os.path.join(BASE_DIR, 'scripts', 'md_to_docx.py')
+MD_TO_DOCX_SCRIPT = os.path.join(BASE_DIR, 'scripts', 'utils', 'md_to_docx.py')
 
 def generate_kroki_image(mermaid_code, output_path):
     """Nutzt die Kroki-API, um Mermaid-Code in ein PNG zu verwandeln."""

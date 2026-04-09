@@ -14,7 +14,7 @@ import re
 from datetime import datetime
 
 # Pfade
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW_DATA_DIR = os.path.join(BASE_DIR, 'data', '01_raw')
 DB_PATH = os.path.join(BASE_DIR, 'database', 'blutdruck_input.db')
 

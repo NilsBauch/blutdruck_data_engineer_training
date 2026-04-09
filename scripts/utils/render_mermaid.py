@@ -1,6 +1,24 @@
+# ==============================================================================
+# SCRIPT: render_mermaid.py
+# BESCHREIBUNG: Ein eigenständiges Werkzeug, um Mermaid-Diagramm-Code (Text)
+#               über die Kroki-API in ein Bild (PNG) zu konvertieren.
+# AUFRUF: Kann als Modul importiert oder direkt angepasst werden.
+# ERGEBNIS: Speichert ein PNG-Bild des übergebenen Diagramms.
+# ==============================================================================
+
 import base64
 import requests
 import os
+
+# ==============================================================================
+# FUNKTION: generate_mermaid_image
+# VERWENDUNG:
+# Um ein individuelles Diagramm zu generieren, rufen Sie die Funktion mit dem
+# Mermaid-String und dem gewünschten Dateipfad auf:
+#
+#   code = "graph TD; A-->B;"
+#   generate_mermaid_image(code, "diagramm.png")
+# ==============================================================================
 
 def generate_mermaid_image(mermaid_code, output_path):
     """Konvertiert Mermaid-Code via mermaid.ink API in ein PNG-Bild."""

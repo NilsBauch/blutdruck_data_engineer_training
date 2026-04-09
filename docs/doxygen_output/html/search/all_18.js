@@ -3,7 +3,7 @@ var searchData=
   ['rüber_20etl_20mapping_0',['4. Wie kommen die Daten rüber? (ETL &amp;amp; Mapping)',['../md__architektur_2_design_2_design___dokumentation.html#autotoc_md51',1,'']]],
   ['raw_20area_1',['Rohdaten-Tabellen (Raw Area)',['../md__architektur_2_datenbanken_2_datenbank___uebersicht.html#autotoc_md17',1,'']]],
   ['raw_20ordner_20ablegen_2',['Aktivitätsdiagramm (Whitebox): UC1 - Datenexporte im Raw-Ordner ablegen',['../md__architektur_2_activity_2activity__diagram__uc1.html',1,'']]],
-  ['raw_5fdata_5fdir_3',['RAW_DATA_DIR',['../namespaceload__raw__data.html#ae67ebb345cc52b1ab5a4b840a8c18b60',1,'load_raw_data']]],
+  ['raw_5fdata_5fdir_3',['RAW_DATA_DIR',['../namespaceload__raw__data.html#ae67ebb345cc52b1ab5a4b840a8c18b60',1,'load_raw_data.RAW_DATA_DIR'],['../namespacegenerate__test__users.html#a517e3e5bdf8c775e3d033d91a587754f',1,'generate_test_users.RAW_DATA_DIR']]],
   ['raw_5fdf_5ftest_4',['raw_df_test',['../namespaceapp.html#a2528d604f8fcb564bca9df5fe3e5a339',1,'app']]],
   ['readme_2emd_5',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
   ['refresh_5fdocs_6',['refresh_docs',['../namespacerefresh__docs.html',1,'']]],

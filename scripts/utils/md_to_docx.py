@@ -1,10 +1,19 @@
+# ==============================================================================
+# SCRIPT: md_to_docx.py
+# BESCHREIBUNG: Konvertiert die Design-Dokumentation von Markdown (.md) in das 
+#               Word-Format (.docx). Unterstützt Tabellen, Bilder und Listen.
+# AUFRUF: py scripts/utils/md_to_docx.py
+# VORAUSSETZUNG: Bibliothek 'python-docx'
+# ERGEBNIS: Eine .docx Datei im Verzeichnis 'Architektur/Design/'.
+# ==============================================================================
+
 import os
 from docx import Document
 from docx.shared import Inches
 import re
 
-# Pfade
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# --- KONFIGURATION & PFADE ---
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MD_FILE = os.path.join(BASE_DIR, 'Architektur', 'Design', 'Design_Dokumentation.md')
 DOCX_FILE = os.path.join(BASE_DIR, 'Architektur', 'Design', 'Design_Dokumentation.docx')
 IMAGE_DIR = os.path.join(BASE_DIR, 'Architektur', 'images')
